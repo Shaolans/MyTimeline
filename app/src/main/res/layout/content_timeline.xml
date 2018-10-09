@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_weight="match_parent">
 
     <ImageView
+        android:id="@+id/message_smiley"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/smiley_happy"/>
+    <TextView
+        android:id="@+id/message_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/happy"/>
+        app:layout_constraintLeft_toRightOf="@id/message_smiley"
+        app:layout_constraintTop_toTopOf="@id/message_smiley"
+        android:text="Date"/>
+    <TextView
+        android:id="@+id/message_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/message_date"
+        app:layout_constraintLeft_toRightOf="@id/message_smiley"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Title of message"/>
+    <TextView
+        android:id="@+id/message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="00.00"/>
+
 
 </android.support.constraint.ConstraintLayout>
