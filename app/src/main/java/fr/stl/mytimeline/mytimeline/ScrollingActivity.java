@@ -8,15 +8,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import fr.stl.mytimeline.mytimeline.event.Event;
+import fr.stl.mytimeline.mytimeline.event.EventListHandler;
+import fr.stl.mytimeline.mytimeline.event.Feeling;
 
 public class ScrollingActivity extends AppCompatActivity {
-
+    private static int cpt = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        List<Event> events = new ArrayList<>();
+        EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events);
+        //final ListView list = findViewById(R.id.listevents);
+        //list.setAdapter(adapter);
+        adapter.add(new Event(cpt++, "Event1", new Date(), Feeling.HAPPY, null, "text", "Paris"));
 
 
     }
