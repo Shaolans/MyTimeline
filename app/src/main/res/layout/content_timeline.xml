@@ -1,35 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/message_smiley"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/smiley_happy"/>
-    <TextView
-        android:id="@+id/message_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/msg_smiley"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/smiley_happy"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/msg_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/date_size"
+                android:text="Mardi 9 octobre 2018"/>
+            <TextView
+                android:id="@+id/msg_tiret"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - " />
+            <TextView
+                android:id="@+id/msg_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/date_size"
+                android:text="00:00"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/msg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Title of message"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
 
-        android:text="Date"/>
-    <TextView
-        android:id="@+id/message_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/message_date"
-        app:layout_constraintLeft_toRightOf="@id/message_smiley"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Title of message"/>
-    <TextView
-        android:id="@+id/message_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="00.00"/>
 
 
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
