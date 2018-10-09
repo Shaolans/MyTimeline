@@ -35,10 +35,4 @@
 
     <include layout="@layout/content_scrolling" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/happy"/>
-
-
 </android.support.design.widget.CoordinatorLayout>
