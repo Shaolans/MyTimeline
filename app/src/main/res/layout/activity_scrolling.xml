@@ -22,7 +22,8 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/toolbar"
+            app:title="My Timeline">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -33,6 +34,22 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_scrolling"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:src="@drawable/btn_add"
+        android:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"
+        android:id="@+id/fab_add">
+
+    </android.support.design.widget.FloatingActionButton>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

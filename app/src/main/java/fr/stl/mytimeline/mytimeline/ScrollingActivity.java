@@ -3,6 +3,7 @@ package fr.stl.mytimeline.mytimeline;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,11 +28,26 @@ public class ScrollingActivity extends AppCompatActivity {
 
         List<Event> events = new ArrayList<>();
         EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events);
-        //final ListView list = findViewById(R.id.listevents);
-        //list.setAdapter(adapter);
-        adapter.add(new Event(cpt++, "Event1", new Date(), Feeling.HAPPY, null, "text", "Paris"));
+        final ListView list = findViewById(R.id.listevents);
+        list.setAdapter(adapter);
+        adapter.add(new Event(cpt++, "Event4", new Date(), Feeling.HAPPY, null, "text", "Paris"));
+        adapter.add(new Event(cpt++, "Event2", new Date(), Feeling.HAPPY, null, "text", "Paris"));
+        adapter.add(new Event(cpt++, "Event3", new Date(), Feeling.HAPPY, null, "text", "Paris"));
 
 
+
+
+
+    }
+
+    public void addEvent(EventListHandler adapter){
+        final FloatingActionButton fab = findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
