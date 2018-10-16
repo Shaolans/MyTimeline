@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,6 +29,7 @@ public class DialogEvent {
         EditText name;
         EditText place;
         EditText desc;
+        ImageView img;
         RadioGroup rgfeel;
     }
 
@@ -131,6 +135,34 @@ public class DialogEvent {
             }
         });
 
+        ImageButton imgbtn = alert.findViewById(R.id.imgbtn);
+        imgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                getIntent.setType("image/*");
+
+                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                pickIntent.setType("image/*");
+
+                Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+                context.startActivityForResult(chooserIntent, PICK_IMAGE);
+            }
+        });
+
+
         return alert;
+    }
+
+    public static final int PICK_IMAGE = 1;
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == PICK_IMAGE) {
+            //TODO: action
+        }
     }
 }
