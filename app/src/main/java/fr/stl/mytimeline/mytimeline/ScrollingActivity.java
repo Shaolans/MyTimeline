@@ -1,5 +1,6 @@
 package fr.stl.mytimeline.mytimeline;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,14 +28,30 @@ public class ScrollingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scrolling);
 
         List<Event> events = new ArrayList<>();
-        EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events);
+        final EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events);
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
         adapter.add(new Event(cpt++, "Event4", new Date(), Feeling.HAPPY, null, "text", "Paris"));
         adapter.add(new Event(cpt++, "Event2", new Date(), Feeling.HAPPY, null, "text", "Paris"));
         adapter.add(new Event(cpt++, "Event3", new Date(), Feeling.HAPPY, null, "text", "Paris"));
 
+        FloatingActionButton fab = findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*final Dialog dialog = new Dialog(ScrollingActivity.this);
+                dialog.setContentView(R.layout.add_event_dialog);
+                dialog.setTitle("Add new event");
+                dialog.show();*/
 
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ScrollingActivity.this);
+                alertDialogBuilder.setTitle("Your Title");
+                alertDialogBuilder.setView(ScrollingActivity.this.getLayoutInflater().inflate(R.layout.add_event_dialog, null));
+                alertDialogBuilder.create().show();
+
+
+            }
+        });
 
 
 
