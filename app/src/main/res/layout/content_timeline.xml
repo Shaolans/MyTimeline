@@ -6,18 +6,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/img_left"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <ImageView
         android:id="@+id/img_left"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/line"/>
+        android:src="@drawable/marker_inactive"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:src="@drawable/marker"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/img_left"
+        />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:src="@drawable/marker"
+        app:layout_constraintTop_toBottomOf="@id/img_left"
+        app:layout_constraintBottom_toTopOf="parent"
+        />
 
     <ImageView
         android:id="@+id/msg_smiley"
@@ -60,13 +71,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:padding="10dp"
-        android:text="Title of message dqsdqdqdqsdqsdqsdqsdsqsdqdzddzq"
+        android:text="Title of message"
         android:textSize="20dp"
         android:textColor="@android:color/black"
         app:layout_constraintLeft_toRightOf="@id/img_left"
         app:layout_constraintRight_toLeftOf="@id/msg_img"
         app:layout_constraintTop_toBottomOf="@id/msg_smiley"
         />
+
+    <TextView
+        android:id="@+id/msg_descri"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="Descriptiondqs dsqqsdqsdqdqsdqsdqsdqsdqsdsqdqdqsdqdqddsqdqdsq"
+        android:textColor="@android:color/black"
+        android:textSize="14dp"
+        app:layout_constraintLeft_toRightOf="@id/img_left"
+        app:layout_constraintRight_toLeftOf="@id/msg_img"
+        app:layout_constraintTop_toBottomOf="@id/msg_title" />
 
     <ImageView
         android:id="@+id/msg_img"
