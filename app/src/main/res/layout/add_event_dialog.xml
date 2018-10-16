@@ -36,9 +36,10 @@
         android:id="@+id/place"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/event_name_edit"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@id/event_name_edit"
-        app:layout_constraintRight_toRightOf="@id/event_name_edit"/>
+        app:layout_constraintRight_toRightOf="@id/event_name_edit"
+        app:layout_constraintTop_toBottomOf="@id/event_name_edit" />
 
     <ImageView
         android:id="@+id/imgdate"
@@ -114,6 +115,7 @@
             android:scaleY="0.75"
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
+            android:checked="true"
             />
         <RadioButton
             android:id="@+id/rb_happy"
