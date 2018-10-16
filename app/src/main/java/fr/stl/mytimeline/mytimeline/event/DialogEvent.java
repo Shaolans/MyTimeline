@@ -2,7 +2,7 @@ package fr.stl.mytimeline.mytimeline.event;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,8 +11,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Comparator;
 
 
 import fr.stl.mytimeline.mytimeline.R;
@@ -35,6 +37,7 @@ public class DialogEvent {
         final Calendar cal = Calendar.getInstance();
 
 
+
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -42,13 +45,6 @@ public class DialogEvent {
             }
         });
 
-        /*alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                adapter.add(new Event(0, tvname.getText().toString(), cal.getTime(), null, null, "YES","Paris"));
-                dialog.dismiss();
-            }
-        });*/
 
 
         android.support.v7.app.AlertDialog alert = alertDialogBuilder.create();
@@ -78,14 +74,24 @@ public class DialogEvent {
                         break;
                 }
 
-                adapter.add(new Event(0, holder.name.getText().toString(), cal.getTime(), null, null,
+
+                adapter.add(new Event(0, holder.name.getText().toString(), cal.getTime(), value, null,
                         holder.desc.getText().toString(),holder.place.getText().toString()));
+                adapter.sort(new Comparator<Event>() {
+                    @Override
+                    public int compare(Event o1, Event o2) {
+                        if(o1.getDate().before(o2.getDate())) return -1;
+                        if(o1.getDate().after(o2.getDate())) return 1;
+                        return 0;
+                    }
+                });
                 dialog.dismiss();
             }
         });
         alert.show();
 
         final TextView tvdate = alert.findViewById(R.id.date);
+        final TextView time = alert.findViewById(R.id.time);
         holder.rgfeel = alert.findViewById(R.id.radiogroup);
         holder.name = alert.findViewById(R.id.event_name_edit);
         holder.desc = alert.findViewById(R.id.desc);
@@ -105,6 +111,23 @@ public class DialogEvent {
                     }
                 });
                 dpd.show();
+            }
+        });
+        time.setText(cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE));
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog tpd = new TimePickerDialog(context, android.R.style.Theme_Holo_Light,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                cal.set(Calendar.MINUTE, minute);
+                                time.setText(cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE));
+                            }
+                        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);
+                tpd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                tpd.show();
             }
         });
 

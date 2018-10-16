@@ -3,7 +3,6 @@ package fr.stl.mytimeline.mytimeline.event;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import fr.stl.mytimeline.mytimeline.R;
@@ -53,10 +54,32 @@ public class EventListHandler extends ArrayAdapter<Event> {
         final ImageView smiley = view.findViewById(R.id.msg_smiley);
         final TextView date = view.findViewById(R.id.msg_date);
         final TextView title = view.findViewById(R.id.msg_title);
+        final TextView time = view.findViewById(R.id.msg_time);
+
         final Event event = getItem(position);
-        smiley.setImageResource(R.drawable.smiley_rhappy);
-        date.setText(event.getText_content().toString());
+        switch(event.getFeel()){
+            case RHAPPY:
+                smiley.setImageResource(R.drawable.smiley_rhappy);
+                break;
+            case HAPPY:
+                smiley.setImageResource(R.drawable.smiley_happy);
+                break;
+            case MEH:
+                smiley.setImageResource(R.drawable.smiley_meh);
+                break;
+            case SAD:
+                smiley.setImageResource(R.drawable.smiley_sad);
+                break;
+            case RSAD:
+                smiley.setImageResource(R.drawable.smiley_rsad);
+                break;
+        }
+        date.setText(event.getDate().getDay()+"/"+event.getDate().getMonth()+"/"+event.getDate().getYear());
         title.setText(event.getName());
+        time.setText(event.getDate().getHours()+":"+event.getDate().getMinutes());
         return view;
     }
+
+
+
 }
