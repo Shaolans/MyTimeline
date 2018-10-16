@@ -3,15 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/img_left"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/img_left"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line"/>
 
     <ImageView
         android:id="@+id/msg_smiley"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:padding="2dp"
-        android:src="@drawable/smiley_happy" />
+        android:src="@drawable/smiley_happy"
+        app:layout_constraintLeft_toRightOf="@id/img_left"
+        app:layout_constraintBottom_toBottomOf="@id/msg_date"/>
 
     <TextView
         android:id="@+id/msg_date"
@@ -19,13 +35,15 @@
         android:layout_height="wrap_content"
         android:text="Mardi 9 octobre 2018"
         app:layout_constraintLeft_toRightOf="@id/msg_smiley"
-        android:textSize="@dimen/date_size" />
+        android:textSize="@dimen/date_size"
+        android:paddingTop="10dp"/>
 
     <TextView
         android:id="@+id/msg_tiret"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/msg_date"
+        app:layout_constraintBottom_toBottomOf="@id/msg_date"
         android:text=" - " />
 
     <TextView
@@ -33,26 +51,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/msg_tiret"
+        app:layout_constraintBottom_toBottomOf="@id/msg_date"
         android:text="00:00"
         android:textSize="@dimen/date_size" />
 
     <TextView
         android:id="@+id/msg_title"
-        android:layout_width="240dp"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:padding="10dp"
         android:text="Title of message dqsdqdqdqsdqsdqsdqsdsqsdqdzddzq"
         android:textSize="20dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@id/img_left"
         app:layout_constraintRight_toLeftOf="@id/msg_img"
-        app:layout_constraintTop_toBottomOf="@id/msg_smiley" />
+        app:layout_constraintTop_toBottomOf="@id/msg_smiley"
+        />
 
     <ImageView
         android:id="@+id/msg_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:paddingBottom="@android:dimen/app_icon_size"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="4dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/msg_smiley"/>
 </android.support.constraint.ConstraintLayout>
