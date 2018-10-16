@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.stl.mytimeline.mytimeline.event.DialogEvent;
 import fr.stl.mytimeline.mytimeline.event.Event;
 import fr.stl.mytimeline.mytimeline.event.EventListHandler;
 import fr.stl.mytimeline.mytimeline.event.Feeling;
@@ -44,10 +45,11 @@ public class ScrollingActivity extends AppCompatActivity {
                 dialog.setTitle("Add new event");
                 dialog.show();*/
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ScrollingActivity.this);
+                /*AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ScrollingActivity.this);
                 alertDialogBuilder.setTitle("Your Title");
                 alertDialogBuilder.setView(ScrollingActivity.this.getLayoutInflater().inflate(R.layout.add_event_dialog, null));
-                alertDialogBuilder.create().show();
+                alertDialogBuilder.create().show();*/
+                DialogEvent.createAddEvent(adapter, ScrollingActivity.this).show();
 
 
             }
