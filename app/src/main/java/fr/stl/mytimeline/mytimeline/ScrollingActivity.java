@@ -3,6 +3,7 @@ package fr.stl.mytimeline.mytimeline;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
@@ -38,8 +39,8 @@ public class ScrollingActivity extends AppCompatActivity {
                 //DialogEventOld.createAddEvent(adapter, ScrollingActivity.this).show();
 
                 DialogEvent de = new DialogEvent().init(adapter, ScrollingActivity.this);
-                de.onAttach(ScrollingActivity.this);
-                de.createAddEvent().show();
+                FragmentManager fm = getSupportFragmentManager();
+                de.show(fm, "Dialog_event");
             }
         });
 

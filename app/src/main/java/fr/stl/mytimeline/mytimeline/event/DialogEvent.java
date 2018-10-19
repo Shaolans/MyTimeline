@@ -3,11 +3,13 @@ package fr.stl.mytimeline.mytimeline.event;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.DatePicker;
@@ -47,7 +49,8 @@ public class DialogEvent extends DialogFragment {
     }
 
 
-    public android.support.v7.app.AlertDialog createAddEvent(){
+    @Override
+    public Dialog onCreateDialog(Bundle saveInstanceState){
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivityD());
         alertDialogBuilder.setTitle("Add an event");
         alertDialogBuilder.setView(getActivityD().getLayoutInflater().inflate(R.layout.add_event_dialog, null));
@@ -161,10 +164,10 @@ public class DialogEvent extends DialogFragment {
                 Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
 
-                setTargetFragment(DialogEvent.this, PICK_IMAGE);
+                //setTargetFragment(DialogEvent.this, PICK_IMAGE);
                 //getTargetFragment().onActivityResult(getTargetRequestCode(), 0, chooserIntent);
-                getTargetFragment().startActivityForResult(chooserIntent, PICK_IMAGE);
-                //getActivity().startActivityForResult(chooserIntent, PICK_IMAGE);
+                //getTargetFragment().startActivityForResult(chooserIntent, PICK_IMAGE);
+                startActivityForResult(chooserIntent, PICK_IMAGE);
 
             }
         });
