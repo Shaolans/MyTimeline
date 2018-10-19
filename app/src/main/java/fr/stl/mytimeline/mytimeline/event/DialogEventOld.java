@@ -1,6 +1,5 @@
 package fr.stl.mytimeline.mytimeline.event;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -8,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,40 +15,28 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Comparator;
 
+
 import fr.stl.mytimeline.mytimeline.R;
+import fr.stl.mytimeline.mytimeline.ScrollingActivity;
 
-public class DialogEvent extends DialogFragment {
+public class DialogEventOld {
 
-    private EditText name;
-    private EditText place;
-    private EditText desc;
-    private ImageView img;
-    private RadioGroup rgfeel;
-    private EventListHandler adapter;
-    private Activity activity;
-
-
-
-    public Activity getActivityD(){
-        return activity;
+    public static class ViewHolder {
+        EditText name;
+        EditText place;
+        EditText desc;
+        ImageView img;
+        RadioGroup rgfeel;
     }
 
-    public DialogEvent init(EventListHandler adapter, Activity activity){
-        this.adapter = adapter;
-        this.activity = activity;
-        return this;
-    }
-
-
-    public android.support.v7.app.AlertDialog createAddEvent(){
-        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivityD());
+    public static android.support.v7.app.AlertDialog createAddEvent(final EventListHandler adapter, final ScrollingActivity context){
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Add an event");
-        alertDialogBuilder.setView(getActivityD().getLayoutInflater().inflate(R.layout.add_event_dialog, null));
+        alertDialogBuilder.setView(context.getLayoutInflater().inflate(R.layout.add_event_dialog, null));
 
         final Calendar cal = Calendar.getInstance();
 
@@ -67,11 +53,12 @@ public class DialogEvent extends DialogFragment {
 
         android.support.v7.app.AlertDialog alert = alertDialogBuilder.create();
 
+        final ViewHolder holder = new ViewHolder();
 
         alert.setButton(AlertDialog.BUTTON_POSITIVE, "Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int selectedId = rgfeel.getCheckedRadioButtonId();
+                int selectedId = holder.rgfeel.getCheckedRadioButtonId();
                 Feeling value  = Feeling.RHAPPY;
                 switch(selectedId){
                     case R.id.rb_rhappy:
@@ -92,8 +79,8 @@ public class DialogEvent extends DialogFragment {
                 }
 
 
-                adapter.add(new Event(0, name.getText().toString(), cal.getTime(), value, null,
-                        desc.getText().toString(),place.getText().toString()));
+                adapter.add(new Event(0, holder.name.getText().toString(), cal.getTime(), value, null,
+                        holder.desc.getText().toString(),holder.place.getText().toString()));
                 adapter.sort(new Comparator<Event>() {
                     @Override
                     public int compare(Event o1, Event o2) {
@@ -109,16 +96,16 @@ public class DialogEvent extends DialogFragment {
 
         final TextView tvdate = alert.findViewById(R.id.date);
         final TextView time = alert.findViewById(R.id.time);
-        rgfeel = alert.findViewById(R.id.radiogroup);
-        name = alert.findViewById(R.id.event_name_edit);
-        desc = alert.findViewById(R.id.desc);
-        place = alert.findViewById(R.id.place);
+        holder.rgfeel = alert.findViewById(R.id.radiogroup);
+        holder.name = alert.findViewById(R.id.event_name_edit);
+        holder.desc = alert.findViewById(R.id.desc);
+        holder.place = alert.findViewById(R.id.place);
 
         tvdate.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR));
         tvdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog dpd = new DatePickerDialog(getActivityD(), android.R.style.Theme_Holo_Light);
+                DatePickerDialog dpd = new DatePickerDialog(context, android.R.style.Theme_Holo_Light);
                 dpd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -134,7 +121,7 @@ public class DialogEvent extends DialogFragment {
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog tpd = new TimePickerDialog(getActivityD(), android.R.style.Theme_Holo_Light,
+                TimePickerDialog tpd = new TimePickerDialog(context, android.R.style.Theme_Holo_Light,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -161,11 +148,7 @@ public class DialogEvent extends DialogFragment {
                 Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
 
-                setTargetFragment(DialogEvent.this, PICK_IMAGE);
-                //getTargetFragment().onActivityResult(getTargetRequestCode(), 0, chooserIntent);
-                getTargetFragment().startActivityForResult(chooserIntent, PICK_IMAGE);
-                //getActivity().startActivityForResult(chooserIntent, PICK_IMAGE);
-
+                context.startActivityForResult(chooserIntent, PICK_IMAGE);
             }
         });
 
@@ -176,11 +159,10 @@ public class DialogEvent extends DialogFragment {
     public static final int PICK_IMAGE = 1;
 
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (requestCode == PICK_IMAGE) {
-            Toast.makeText(getActivityD(), "LALALALA", Toast.LENGTH_LONG).show();
+            //TODO: action
         }
     }
 }
