@@ -1,6 +1,5 @@
 package fr.stl.mytimeline.mytimeline.event;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -25,8 +25,7 @@ import java.util.Comparator;
 
 import fr.stl.mytimeline.mytimeline.R;
 
-public class DialogEvent extends DialogFragment {
-
+public class DialogEventEdit extends DialogFragment {
     private EditText name;
     private EditText place;
     private EditText desc;
@@ -34,12 +33,17 @@ public class DialogEvent extends DialogFragment {
     private RadioGroup rgfeel;
     private EventListHandler adapter;
     private ImageView imgv;
+    private Event event;
+    private Calendar cal;
+    private TextView tvdate;
+    private TextView time;
 
 
 
 
-    public DialogEvent init(EventListHandler adapter){
+    public DialogEventEdit init(EventListHandler adapter, int position){
         this.adapter = adapter;
+        event = adapter.getItem(position);
         return this;
     }
 
@@ -47,10 +51,10 @@ public class DialogEvent extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle saveInstanceState){
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setTitle("Add an event");
+        alertDialogBuilder.setTitle("Edit an event");
         alertDialogBuilder.setView(getActivity().getLayoutInflater().inflate(R.layout.add_event_dialog, null));
 
-        final Calendar cal = Calendar.getInstance();
+        cal = Calendar.getInstance();
 
 
 
@@ -66,7 +70,7 @@ public class DialogEvent extends DialogFragment {
         android.support.v7.app.AlertDialog alert = alertDialogBuilder.create();
 
 
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, "Add", new DialogInterface.OnClickListener() {
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, "Edit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int selectedId = rgfeel.getCheckedRadioButtonId();
@@ -105,8 +109,8 @@ public class DialogEvent extends DialogFragment {
         });
         alert.show();
 
-        final TextView tvdate = alert.findViewById(R.id.date);
-        final TextView time = alert.findViewById(R.id.time);
+        tvdate = alert.findViewById(R.id.date);
+        time = alert.findViewById(R.id.time);
         rgfeel = alert.findViewById(R.id.radiogroup);
         name = alert.findViewById(R.id.event_name_edit);
         desc = alert.findViewById(R.id.desc);
@@ -168,6 +172,31 @@ public class DialogEvent extends DialogFragment {
         });
 
 
+        name.setText(event.getName());
+        place.setText(event.getName());
+        tvdate.setText(event.getDate().getDay()+"/"+event.getDate().getMonth()+"/"+event.getDate().getYear());
+        time.setText(event.getDate().getHours()+":"+event.getDate().getMinutes());
+        if(event.getImg() != null) imgv.setImageURI(event.getImg());
+        desc.setText(event.getText_content());
+        Feeling f = event.getFeel();
+        switch(f){
+            case RHAPPY:
+                ((RadioButton)alert.findViewById(R.id.rb_rhappy)).setChecked(true);
+                break;
+            case HAPPY:
+                ((RadioButton)alert.findViewById(R.id.rb_happy)).setChecked(true);
+                break;
+            case MEH:
+                ((RadioButton)alert.findViewById(R.id.rb_meh)).setChecked(true);
+                break;
+            case SAD:
+                ((RadioButton)alert.findViewById(R.id.rb_sad)).setChecked(true);
+                break;
+            case RSAD:
+                ((RadioButton)alert.findViewById(R.id.rb_rsad)).setChecked(true);
+                break;
+        }
+
         return alert;
     }
 
@@ -184,7 +213,6 @@ public class DialogEvent extends DialogFragment {
             }else{
                 Toast.makeText(getActivity(), "No image selected", Toast.LENGTH_LONG).show();
             }
-
         }
     }
 }

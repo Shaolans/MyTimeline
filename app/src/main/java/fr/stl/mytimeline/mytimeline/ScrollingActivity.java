@@ -20,7 +20,6 @@ import fr.stl.mytimeline.mytimeline.event.EventListHandler;
 
 public class ScrollingActivity extends AppCompatActivity {
     private static int cpt = 0;
-    public static final int PICK_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //DialogEventOld.createAddEvent(adapter, ScrollingActivity.this).show();
 
-                DialogEvent de = new DialogEvent().init(adapter, ScrollingActivity.this);
+                DialogEvent de = new DialogEvent().init(adapter);
                 FragmentManager fm = getSupportFragmentManager();
                 de.show(fm, "Dialog_event");
             }

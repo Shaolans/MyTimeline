@@ -31,6 +31,7 @@ public class DialogEventOld {
         EditText desc;
         ImageView img;
         RadioGroup rgfeel;
+        ImageView imgv;
     }
 
     public static android.support.v7.app.AlertDialog createAddEvent(final EventListHandler adapter, final ScrollingActivity context){
@@ -135,8 +136,8 @@ public class DialogEventOld {
             }
         });
 
-        ImageButton imgbtn = alert.findViewById(R.id.imgbtn);
-        imgbtn.setOnClickListener(new View.OnClickListener() {
+        holder.imgv = alert.findViewById(R.id.imgv);
+        holder.imgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);

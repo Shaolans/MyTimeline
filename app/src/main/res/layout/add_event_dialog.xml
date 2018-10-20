@@ -48,7 +48,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/btn_add"
         app:layout_constraintTop_toBottomOf="@id/place"
-        app:layout_constraintRight_toLeftOf="@id/date"/>
+        app:layout_constraintRight_toLeftOf="@id/date"
+        android:paddingVertical="25dp"/>
 
     <TextView
         android:id="@+id/date"
@@ -57,7 +58,8 @@
         android:text="01/01/2000"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/imgdate"
-        app:layout_constraintTop_toBottomOf="@id/place" />
+        app:layout_constraintTop_toBottomOf="@id/place"
+        android:paddingVertical="25dp"/>
 
     <ImageView
         android:id="@+id/imgtime"
@@ -65,7 +67,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/btn_add"
         app:layout_constraintTop_toBottomOf="@id/place"
-        app:layout_constraintLeft_toRightOf="@id/date"/>
+        app:layout_constraintLeft_toRightOf="@id/date"
+        android:paddingVertical="25dp"/>
 
     <TextView
         android:id="@+id/time"
@@ -74,26 +77,21 @@
         android:text="8:00 AM"
         android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@id/imgtime"
-        app:layout_constraintTop_toBottomOf="@id/place"/>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/btn_add"
         app:layout_constraintTop_toBottomOf="@id/place"
-        app:layout_constraintLeft_toRightOf="@id/time"
-        app:layout_constraintBottom_toTopOf="@id/desctext"
-        android:id="@+id/imgbtn"
+        android:paddingVertical="25dp"
         />
 
+
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/btn_add"
-        app:layout_constraintLeft_toRightOf="@id/imgbtn"
-        app:layout_constraintTop_toBottomOf="@id/place"
+        android:id="@+id/imgv"
+        app:layout_constraintLeft_toRightOf="@id/time"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/desctext"/>
+        app:layout_constraintTop_toBottomOf="@id/place"
+        app:layout_constraintBottom_toTopOf="@id/desctext"
+        />
 
     <TextView
         android:id="@+id/desctext"

@@ -1,6 +1,7 @@
 package fr.stl.mytimeline.mytimeline.event;
 
 import android.media.Image;
+import android.net.Uri;
 
 import java.util.Date;
 
@@ -9,11 +10,11 @@ public class Event {
     private String name;
     private Date date;
     private Feeling feel;
-    private Image img;
+    private Uri img;
     private String text_content;
     private String place;
 
-    public Event(int id, String name, Date date, Feeling feel, Image img, String text_content, String place) {
+    public Event(int id, String name, Date date, Feeling feel, Uri img, String text_content, String place) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -55,11 +56,11 @@ public class Event {
         this.feel = feel;
     }
 
-    public Image getImg() {
+    public Uri getImg() {
         return img;
     }
 
-    public void setImg(Image img) {
+    public void setImg(Uri img) {
         this.img = img;
     }
 
