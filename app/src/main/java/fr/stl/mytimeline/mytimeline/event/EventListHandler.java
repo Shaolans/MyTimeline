@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import java.util.Calendar;
 import java.util.List;
 
 import fr.stl.mytimeline.mytimeline.R;
@@ -45,6 +46,11 @@ public class EventListHandler extends ArrayAdapter<Event> {
         super(context, resource, textViewResourceId, objects);
     }
 
+    public EventListHandler(Context context, int resource, List<Event> objects, AppCompatActivity activity) {
+        super(context, resource, objects);
+        this.activity = activity;
+    }
+
     public AppCompatActivity getActivity(){
         return activity;
     }
@@ -68,6 +74,7 @@ public class EventListHandler extends ArrayAdapter<Event> {
         final TextView title = view.findViewById(R.id.msg_title);
         final TextView time = view.findViewById(R.id.msg_time);
         final TextView descr = view.findViewById(R.id.msg_descri);
+        final ImageView img = view.findViewById(R.id.msg_img);
 
         final Event event = getItem(position);
         switch(event.getFeel()){
@@ -87,17 +94,24 @@ public class EventListHandler extends ArrayAdapter<Event> {
                 smiley.setImageResource(R.drawable.smiley_rsad);
                 break;
         }
-        date.setText(event.getDate().getDay()+"/"+event.getDate().getMonth()+"/"+event.getDate().getYear());
+        Calendar c = Calendar.getInstance();
+        c.setTime(event.getDate());
+        date.setText(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR));
         title.setText(event.getName());
-        time.setText(event.getDate().getHours()+":"+event.getDate().getMinutes());
+        time.setText(c.get(Calendar.HOUR)+":"+c.get(Calendar.MINUTE));
         descr.setText(event.getText_content());
+        if(event.getImg() != null){
+            img.setImageURI(event.getImg());
+        }else{
+            img.setImageDrawable(null);
+        }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*DialogEventEdit de = new DialogEventEdit().init(EventListHandler.this, pos);
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                de.show(fm, "Dialog_event_edit");*/
+                DialogEventEdit de = new DialogEventEdit().init(EventListHandler.this, pos);
+                //de.show(de.getChildFragmentManager(), "Dialog_event_edit");
+                de.show(activity.getSupportFragmentManager(), "Dialog_event_edit");
             }
         });
         return view;

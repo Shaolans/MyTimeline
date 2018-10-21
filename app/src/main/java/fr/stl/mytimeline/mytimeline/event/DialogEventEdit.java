@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.net.URI;
 import java.util.Calendar;
 import java.util.Comparator;
 
@@ -37,6 +39,7 @@ public class DialogEventEdit extends DialogFragment {
     private Calendar cal;
     private TextView tvdate;
     private TextView time;
+    private Uri imgvu;
 
 
 
@@ -94,8 +97,14 @@ public class DialogEventEdit extends DialogFragment {
                 }
 
 
-                adapter.add(new Event(0, name.getText().toString(), cal.getTime(), value, null,
-                        desc.getText().toString(),place.getText().toString()));
+
+                event.setText_content(desc.getText().toString());
+                event.setName(name.getText().toString());
+                event.setDate(cal.getTime());
+                event.setFeel(value);
+                if(imgvu != null) event.setImg(imgvu);
+                event.setPlace(place.getText().toString());
+
                 adapter.sort(new Comparator<Event>() {
                     @Override
                     public int compare(Event o1, Event o2) {
@@ -116,7 +125,7 @@ public class DialogEventEdit extends DialogFragment {
         desc = alert.findViewById(R.id.desc);
         place = alert.findViewById(R.id.place);
 
-        tvdate.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR));
+        tvdate.setText(cal.get(Calendar.DATE)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR));
         tvdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,8 +183,10 @@ public class DialogEventEdit extends DialogFragment {
 
         name.setText(event.getName());
         place.setText(event.getName());
-        tvdate.setText(event.getDate().getDay()+"/"+event.getDate().getMonth()+"/"+event.getDate().getYear());
-        time.setText(event.getDate().getHours()+":"+event.getDate().getMinutes());
+        Calendar c = Calendar.getInstance();
+        c.setTime(event.getDate());
+        tvdate.setText(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR));
+        time.setText(c.get(Calendar.HOUR)+":"+c.get(Calendar.MINUTE));
         if(event.getImg() != null) imgv.setImageURI(event.getImg());
         desc.setText(event.getText_content());
         Feeling f = event.getFeel();
@@ -209,6 +220,7 @@ public class DialogEventEdit extends DialogFragment {
         if (requestCode == PICK_IMAGE) {
             if(data != null){
                 imgv.setImageURI(data.getData());
+                imgvu = data.getData();
                 Toast.makeText(getActivity(), data.getData().toString()+" added to event", Toast.LENGTH_LONG).show();
             }else{
                 Toast.makeText(getActivity(), "No image selected", Toast.LENGTH_LONG).show();

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 
 import fr.stl.mytimeline.mytimeline.R;
 
@@ -34,6 +36,7 @@ public class DialogEvent extends DialogFragment {
     private RadioGroup rgfeel;
     private EventListHandler adapter;
     private ImageView imgv;
+    private Uri imgvu = null;
 
 
 
@@ -90,7 +93,7 @@ public class DialogEvent extends DialogFragment {
                 }
 
 
-                adapter.add(new Event(0, name.getText().toString(), cal.getTime(), value, null,
+                adapter.add(new Event(0, name.getText().toString(), cal.getTime(), value, imgvu,
                         desc.getText().toString(),place.getText().toString()));
                 adapter.sort(new Comparator<Event>() {
                     @Override
@@ -180,6 +183,7 @@ public class DialogEvent extends DialogFragment {
         if (requestCode == PICK_IMAGE) {
             if(data != null){
                 imgv.setImageURI(data.getData());
+                imgvu = data.getData();
                 Toast.makeText(getActivity(), data.getData().toString()+" added to event", Toast.LENGTH_LONG).show();
             }else{
                 Toast.makeText(getActivity(), "No image selected", Toast.LENGTH_LONG).show();

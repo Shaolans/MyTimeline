@@ -27,7 +27,7 @@ public class ScrollingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scrolling);
 
         List<Event> events = new ArrayList<>();
-        final EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events);
+        final EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events, this);
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
 
