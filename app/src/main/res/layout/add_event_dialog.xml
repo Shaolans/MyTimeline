@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/event_name_text"
@@ -102,13 +103,13 @@
 
     <EditText
         android:id="@+id/desc"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:minLines="6"
+        android:gravity="top|left"
+        android:background="@android:drawable/editbox_background"
         app:layout_constraintTop_toBottomOf="@id/desctext"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         />
 
     <TextView
@@ -119,28 +120,30 @@
         app:layout_constraintTop_toBottomOf="@id/desc"/>
     <RadioGroup
         android:id="@+id/radiogroup"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp"
         app:layout_constraintTop_toBottomOf="@id/moodtext">
+
         <RadioButton
             android:id="@+id/rb_rhappy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/smiley_rhappy"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
             android:checked="true"
-            />
+            android:drawableStart="@drawable/smiley_rhappy"
+            android:scaleX="0.55"
+            android:scaleY="0.55" />
         <RadioButton
             android:id="@+id/rb_happy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/smiley_happy"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
+            android:scaleX="0.55"
+            android:scaleY="0.55"
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
             />
@@ -149,31 +152,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/smiley_meh"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
+            android:scaleX="0.55"
+            android:scaleY="0.55"
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
             />
+
         <RadioButton
             android:id="@+id/rb_sad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/smiley_sad"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
-            />
+            android:drawableStart="@drawable/smiley_sad"
+            android:scaleX="0.55"
+            android:scaleY="0.55" />
+
         <RadioButton
             android:id="@+id/rb_rsad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/smiley_rsad"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
-            />
+            android:drawableStart="@drawable/smiley_rsad"
+            android:scaleX="0.55"
+            android:scaleY="0.55" />
     </RadioGroup>
 
 

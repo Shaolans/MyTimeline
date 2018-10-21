@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <ImageView
         android:id="@+id/img_left"
         android:layout_width="100dp"
@@ -30,14 +31,21 @@
         app:layout_constraintBottom_toTopOf="parent"
         />
 
+    <TextView
+        android:id="@+id/padding_top"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        app:layout_constraintLeft_toRightOf="@id/img_left"
+        />
+
     <ImageView
         android:id="@+id/msg_smiley"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:padding="2dp"
         android:src="@drawable/smiley_happy"
-        app:layout_constraintLeft_toRightOf="@id/img_left"
-        app:layout_constraintBottom_toBottomOf="@id/msg_date"/>
+        app:layout_constraintTop_toBottomOf="@id/padding_top"
+        app:layout_constraintLeft_toRightOf="@id/img_left"/>
 
     <TextView
         android:id="@+id/msg_date"
@@ -45,6 +53,7 @@
         android:layout_height="wrap_content"
         android:text="Mardi 9 octobre 2018"
         app:layout_constraintLeft_toRightOf="@id/msg_smiley"
+        app:layout_constraintBottom_toBottomOf="@id/msg_smiley"
         android:textSize="@dimen/date_size"
         android:paddingTop="10dp"/>
 
@@ -69,8 +78,7 @@
         android:id="@+id/msg_title"
         android:layout_width="174dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:padding="10dp"
+        android:padding="6dp"
         android:text="Title of message"
         android:textSize="20dp"
         android:textColor="@android:color/black"
@@ -84,7 +92,7 @@
         android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:padding="4dp"
-        android:text="Descriptiondqs dsqqsdqsdqdqsdqsdqsdqsdqsdsqdqdqsdqdqddsqdqdsq"
+        android:text="Description"
         android:textColor="@android:color/black"
         android:textSize="14dp"
         app:layout_constraintLeft_toRightOf="@id/img_left"

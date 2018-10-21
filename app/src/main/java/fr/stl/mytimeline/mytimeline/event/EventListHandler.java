@@ -67,6 +67,7 @@ public class EventListHandler extends ArrayAdapter<Event> {
         final TextView date = view.findViewById(R.id.msg_date);
         final TextView title = view.findViewById(R.id.msg_title);
         final TextView time = view.findViewById(R.id.msg_time);
+        final TextView descr = view.findViewById(R.id.msg_descri);
 
         final Event event = getItem(position);
         switch(event.getFeel()){
@@ -89,6 +90,7 @@ public class EventListHandler extends ArrayAdapter<Event> {
         date.setText(event.getDate().getDay()+"/"+event.getDate().getMonth()+"/"+event.getDate().getYear());
         title.setText(event.getName());
         time.setText(event.getDate().getHours()+":"+event.getDate().getMinutes());
+        descr.setText(event.getText_content());
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
