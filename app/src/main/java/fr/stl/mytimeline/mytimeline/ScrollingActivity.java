@@ -1,6 +1,5 @@
 package fr.stl.mytimeline.mytimeline;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -8,15 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-
+import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.stl.mytimeline.mytimeline.event.DialogEvent;
 import fr.stl.mytimeline.mytimeline.event.Event;
 import fr.stl.mytimeline.mytimeline.event.EventListHandler;
+import fr.stl.mytimeline.mytimeline.meteo.JSONWeatherTask;
 
 public class ScrollingActivity extends AppCompatActivity {
     private static int cpt = 0;
@@ -43,10 +43,8 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
+        String location = "Paris,FR";
+        new JSONWeatherTask(this).execute(new String[] {location});
     }
 
     public void addEvent(EventListHandler adapter){
@@ -79,7 +77,4 @@ public class ScrollingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 }
