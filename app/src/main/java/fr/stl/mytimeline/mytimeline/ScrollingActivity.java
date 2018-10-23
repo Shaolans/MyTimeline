@@ -98,8 +98,6 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //DialogEventOld.createAddEvent(adapter, ScrollingActivity.this).show();
-
                 DialogEvent de = new DialogEvent().init(adapter);
                 FragmentManager fm = getSupportFragmentManager();
                 de.show(fm, "Dialog_event");
