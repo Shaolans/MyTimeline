@@ -1,11 +1,12 @@
 package fr.stl.mytimeline.mytimeline.event;
 
-import android.media.Image;
 import android.net.Uri;
 
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Event {
+public class Event implements Serializable {
     private int id;
     private String name;
     private Date date;

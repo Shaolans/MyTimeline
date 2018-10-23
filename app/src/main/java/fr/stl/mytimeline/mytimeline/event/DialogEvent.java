@@ -1,9 +1,11 @@
 package fr.stl.mytimeline.mytimeline.event;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 import fr.stl.mytimeline.mytimeline.R;
+import fr.stl.mytimeline.mytimeline.notification.NotificationReceiver;
 
 public class DialogEvent extends DialogFragment {
 
@@ -93,9 +96,10 @@ public class DialogEvent extends DialogFragment {
                         break;
                 }
 
-
-                adapter.add(new Event(0, name.getText().toString(), cal.getTime(), value, imgvu,
-                        desc.getText().toString(),place.getText().toString()));
+                Event e = new Event(0, name.getText().toString(), cal.getTime(), value, imgvu,
+                        desc.getText().toString(),place.getText().toString());
+                adapter.add(e);
+                setNotification(e);
                 adapter.sort(new Comparator<Event>() {
                     @Override
                     public int compare(Event o1, Event o2) {
@@ -192,5 +196,22 @@ public class DialogEvent extends DialogFragment {
             }
 
         }
+    }
+
+    public AlarmManager setNotification(Event e){
+        Intent alertIntent = new Intent(getActivity(), NotificationReceiver.class);
+
+        alertIntent
+                .putExtra("name", e.getName())
+                .putExtra("text_content", e.getText_content())
+                .putExtra("place", e.getPlace());
+
+        AlarmManager alarmManager = (AlarmManager)
+                getActivity().getSystemService(getActivity().ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, e.getDate().getTime(),
+                PendingIntent.getBroadcast(getActivity(), 1, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+
+        return alarmManager;
     }
 }

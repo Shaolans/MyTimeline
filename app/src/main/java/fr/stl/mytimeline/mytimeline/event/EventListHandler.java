@@ -1,6 +1,9 @@
 package fr.stl.mytimeline.mytimeline.event;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.content.Context;
@@ -15,9 +18,11 @@ import android.widget.TextView;
 
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import fr.stl.mytimeline.mytimeline.R;
+import fr.stl.mytimeline.mytimeline.notification.NotificationReceiver;
 
 public class EventListHandler extends ArrayAdapter<Event> {
     private AppCompatActivity activity;
@@ -98,7 +103,7 @@ public class EventListHandler extends ArrayAdapter<Event> {
         c.setTime(event.getDate());
         date.setText(c.get(Calendar.DATE)+"/"+DateUtils.convertMonth(c.get(Calendar.MONTH))+"/"+c.get(Calendar.YEAR));
         title.setText(event.getName());
-        time.setText(c.get(Calendar.HOUR)+":"+c.get(Calendar.MINUTE));
+        time.setText(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
         descr.setText(event.getText_content());
         if(event.getImg() != null){
             img.setImageURI(event.getImg());
@@ -110,12 +115,13 @@ public class EventListHandler extends ArrayAdapter<Event> {
             @Override
             public void onClick(View v) {
                 DialogEventEdit de = new DialogEventEdit().init(EventListHandler.this, pos);
-                //de.show(de.getChildFragmentManager(), "Dialog_event_edit");
                 de.show(activity.getSupportFragmentManager(), "Dialog_event_edit");
             }
         });
         return view;
     }
+
+
 
 
 

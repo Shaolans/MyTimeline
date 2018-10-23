@@ -10,22 +10,22 @@ import android.support.v4.app.NotificationCompat;
 import fr.stl.mytimeline.mytimeline.R;
 import fr.stl.mytimeline.mytimeline.ScrollingActivity;
 
+
 public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent){
-        createNotification(context);
+        createNotification(context, intent);
     }
 
-    public void createNotification(Context context){
+    public void createNotification(Context context, Intent intent){
         PendingIntent noficitIntent = PendingIntent.getActivity(context, 0,
                 new Intent(context, ScrollingActivity.class), 0);
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "default")
                 .setSmallIcon(R.drawable.btn_add)
-                .setContentTitle("Notifcation")
-                .setTicker("WE")
-                .setContentText("AZEAZE");
+                .setContentTitle("The event "+intent.getStringExtra("name")+" at "+intent.getStringExtra("place"))
+                .setTicker("")
+                .setContentText(intent.getStringExtra("text_content"));
 
         mBuilder.setContentIntent(noficitIntent);
 
@@ -36,7 +36,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mNotificationManager.notify(1, mBuilder.build());
+        mNotificationManager.notify(0, mBuilder.build());
 
     }
 }
