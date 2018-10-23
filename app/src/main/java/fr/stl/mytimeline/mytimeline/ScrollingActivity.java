@@ -1,5 +1,8 @@
 package fr.stl.mytimeline.mytimeline;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import fr.stl.mytimeline.mytimeline.event.DialogEvent;
@@ -20,6 +24,7 @@ import fr.stl.mytimeline.mytimeline.event.DialogEventEdit;
 import fr.stl.mytimeline.mytimeline.event.Event;
 import fr.stl.mytimeline.mytimeline.event.EventListHandler;
 import fr.stl.mytimeline.mytimeline.meteo.JSONWeatherTask;
+import fr.stl.mytimeline.mytimeline.notification.NotificationReceiver;
 
 public class ScrollingActivity extends AppCompatActivity {
     private static int cpt = 0;
@@ -33,6 +38,7 @@ public class ScrollingActivity extends AppCompatActivity {
         final EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events, this);
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
                 PopupMenu popup = new PopupMenu(ScrollingActivity.this, v);
@@ -51,6 +57,7 @@ public class ScrollingActivity extends AppCompatActivity {
                             default:
                                 return false;
                         }
+
                     }
                 });
                 popup.show();
@@ -92,6 +99,13 @@ public class ScrollingActivity extends AppCompatActivity {
                 DialogEvent de = new DialogEvent().init(adapter);
                 FragmentManager fm = getSupportFragmentManager();
                 de.show(fm, "Dialog_event");
+                Intent alertIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+
+                AlarmManager alarmManager = (AlarmManager)
+                        getSystemService(getApplicationContext().ALARM_SERVICE);
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(),
+                        PendingIntent.getBroadcast(getApplicationContext(), 1, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             }
         });
 
@@ -130,3 +144,21 @@ public class ScrollingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+                /*
+
+                Intent intent = new Intent(getApplicationContext(), ScrollingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                        .setSmallIcon(R.drawable.btn_add)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+                notificationManager.notify(1, mBuilder.build());*/
