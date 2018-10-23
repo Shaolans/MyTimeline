@@ -96,7 +96,7 @@ public class EventListHandler extends ArrayAdapter<Event> {
         }
         Calendar c = Calendar.getInstance();
         c.setTime(event.getDate());
-        date.setText(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR));
+        date.setText(c.get(Calendar.DATE)+"/"+DateUtils.convertMonth(c.get(Calendar.MONTH))+"/"+c.get(Calendar.YEAR));
         title.setText(event.getName());
         time.setText(c.get(Calendar.HOUR)+":"+c.get(Calendar.MINUTE));
         descr.setText(event.getText_content());

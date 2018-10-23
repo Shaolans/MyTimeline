@@ -125,7 +125,7 @@ public class DialogEventEdit extends DialogFragment {
         desc = alert.findViewById(R.id.desc);
         place = alert.findViewById(R.id.place);
 
-        tvdate.setText(cal.get(Calendar.DATE)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR));
+        tvdate.setText(cal.get(Calendar.DATE)+"/"+DateUtils.convertMonth(cal.get(Calendar.MONTH))+"/"+cal.get(Calendar.YEAR));
         tvdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +135,7 @@ public class DialogEventEdit extends DialogFragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         cal.set(year, month, dayOfMonth);
-                        tvdate.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.YEAR));
+                        tvdate.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+DateUtils.convertMonth(cal.get(Calendar.MONTH))+"/"+cal.get(Calendar.YEAR));
                     }
                 });
                 dpd.show();
