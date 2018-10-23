@@ -86,7 +86,7 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/sharp_add_photo_alternate_black_18dp"
+        android:src="@drawable/ic_image_black_24dp"
         android:id="@+id/imgv"
         app:layout_constraintLeft_toRightOf="@id/time"
         app:layout_constraintRight_toRightOf="parent"
