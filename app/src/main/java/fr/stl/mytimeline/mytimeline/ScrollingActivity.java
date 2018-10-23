@@ -34,7 +34,7 @@ public class ScrollingActivity extends AppCompatActivity {
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(final AdapterView<?> parent, View v, final int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
                 PopupMenu popup = new PopupMenu(ScrollingActivity.this, v);
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -43,7 +43,6 @@ public class ScrollingActivity extends AppCompatActivity {
                         switch (item.getItemId()){
                             case R.id.edit_msg:
                                 DialogEventEdit de = new DialogEventEdit().init(adapter, position);
-                                //de.show(de.getChildFragmentManager(), "Dialog_event_edit");
                                 de.show(ScrollingActivity.this.getSupportFragmentManager(), "Dialog_event_edit");
                                 return true;
                             case R.id.remove_msg:
@@ -55,6 +54,31 @@ public class ScrollingActivity extends AppCompatActivity {
                     }
                 });
                 popup.show();
+            }
+        });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
+                PopupMenu popup = new PopupMenu(ScrollingActivity.this, v);
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.edit_msg:
+                                DialogEventEdit de = new DialogEventEdit().init(adapter, position);
+                                de.show(ScrollingActivity.this.getSupportFragmentManager(), "Dialog_event_edit");
+                                return true;
+                            case R.id.remove_msg:
+                                adapter.remove(adapter.getItem(position));
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popup.show();
+                return true;
             }
         });
 
