@@ -7,13 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.stl.mytimeline.mytimeline.event.DialogEvent;
+import fr.stl.mytimeline.mytimeline.event.DialogEventEdit;
 import fr.stl.mytimeline.mytimeline.event.Event;
 import fr.stl.mytimeline.mytimeline.event.EventListHandler;
 import fr.stl.mytimeline.mytimeline.meteo.JSONWeatherTask;
@@ -30,6 +33,31 @@ public class ScrollingActivity extends AppCompatActivity {
         final EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events, this);
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(final AdapterView<?> parent, View v, final int position, long id) {
+                PopupMenu popup = new PopupMenu(ScrollingActivity.this, v);
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.edit_msg:
+                                DialogEventEdit de = new DialogEventEdit().init(adapter, position);
+                                //de.show(de.getChildFragmentManager(), "Dialog_event_edit");
+                                de.show(ScrollingActivity.this.getSupportFragmentManager(), "Dialog_event_edit");
+                                return true;
+                            case R.id.remove_msg:
+                                adapter.remove(adapter.getItem(position));
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popup.show();
+            }
+        });
+
 
         FloatingActionButton fab = findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
