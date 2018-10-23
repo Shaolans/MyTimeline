@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/img_left"
-        android:layout_width="100dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:src="@drawable/marker_inactive"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,7 +16,7 @@
         />
 
     <ImageView
-        android:layout_width="100dp"
+        android:layout_width="60dp"
         android:layout_height="0dp"
         android:src="@drawable/marker"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,7 @@
         />
 
     <ImageView
-        android:layout_width="100dp"
+        android:layout_width="60dp"
         android:layout_height="0dp"
         android:src="@drawable/marker"
         app:layout_constraintTop_toBottomOf="@id/img_left"
@@ -76,7 +76,7 @@
 
     <TextView
         android:id="@+id/msg_title"
-        android:layout_width="174dp"
+        android:layout_width="@dimen/descr_size"
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:text="Title of message"
@@ -89,10 +89,10 @@
 
     <TextView
         android:id="@+id/msg_descri"
-        android:layout_width="174dp"
+        android:layout_width="@dimen/descr_size"
         android:layout_height="wrap_content"
         android:padding="4dp"
-        android:text="Description"
+        android:text="Description "
         android:textColor="@android:color/black"
         android:textSize="14dp"
         app:layout_constraintLeft_toRightOf="@id/img_left"
@@ -106,5 +106,6 @@
         android:layout_marginTop="12dp"
         android:layout_marginRight="4dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/msg_smiley"/>
+        app:layout_constraintTop_toTopOf="@id/msg_smiley"
+        />
 </android.support.constraint.ConstraintLayout>
