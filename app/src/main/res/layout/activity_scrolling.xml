@@ -60,11 +60,6 @@
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:text="Country"
                         android:layout_gravity="right"/>
-                    <ImageView
-                        android:id="@+id/weather_icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="right"/>
                     <TextView
                         android:id="@+id/temp"
                         style="@style/TextAppearance.AppCompat.Body1"
@@ -80,6 +75,12 @@
                         android:layout_gravity="right"
                         android:text="Description"
                         />
+                    <ImageView
+                        android:id="@+id/weather_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right|bottom"
+                        android:layout_weight="1"/>
                 </LinearLayout>
             </LinearLayout>
 
