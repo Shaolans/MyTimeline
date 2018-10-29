@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -26,6 +27,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 
 import fr.stl.mytimeline.mytimeline.R;
+import fr.stl.mytimeline.mytimeline.ScrollingActivity;
 
 public class DialogEventEdit extends DialogFragment {
     private EditText name;
@@ -40,13 +42,15 @@ public class DialogEventEdit extends DialogFragment {
     private TextView tvdate;
     private TextView time;
     private Uri imgvu;
+    private ScrollingActivity mainActivity;
 
 
 
 
-    public DialogEventEdit init(EventListHandler adapter, int position){
+    public DialogEventEdit init(EventListHandler adapter, int position, ScrollingActivity mainActivity){
         this.adapter = adapter;
         event = adapter.getItem(position);
+        this.mainActivity = mainActivity;
         return this;
     }
 
@@ -125,6 +129,19 @@ public class DialogEventEdit extends DialogFragment {
         desc = alert.findViewById(R.id.desc);
         place = alert.findViewById(R.id.place);
 
+        ImageView positionview = alert.findViewById(R.id.positionview);
+        positionview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Address address = mainActivity.getPosition();
+                if(address != null){
+                    place.setText(address.getAddressLine(0));
+                }
+
+            }
+        });
+
+
         tvdate.setText(cal.get(Calendar.DATE)+"/"+DateUtils.convertMonth(cal.get(Calendar.MONTH))+"/"+cal.get(Calendar.YEAR));
         tvdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +199,7 @@ public class DialogEventEdit extends DialogFragment {
 
 
         name.setText(event.getName());
-        place.setText(event.getName());
+        place.setText(event.getPlace());
         Calendar c = Calendar.getInstance();
         c.setTime(event.getDate());
         tvdate.setText(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR));
@@ -223,6 +240,9 @@ public class DialogEventEdit extends DialogFragment {
                 imgvu = data.getData();
                 Toast.makeText(getActivity(), data.getData().toString()+" added to event", Toast.LENGTH_LONG).show();
             }else{
+                imgv.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+                imgvu = null;
+                event.setImg(null);
                 Toast.makeText(getActivity(), "No image selected", Toast.LENGTH_LONG).show();
             }
         }

@@ -22,7 +22,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         PendingIntent noficitIntent = PendingIntent.getActivity(context, 0,
                 new Intent(context, ScrollingActivity.class), 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "default")
-                .setSmallIcon(R.drawable.btn_add)
+                .setSmallIcon(R.drawable.ic_timeline_black_24dp)
                 .setContentTitle("The event "+intent.getStringExtra("name")+" at "+intent.getStringExtra("place"))
                 .setTicker("")
                 .setContentText(intent.getStringExtra("text_content"));

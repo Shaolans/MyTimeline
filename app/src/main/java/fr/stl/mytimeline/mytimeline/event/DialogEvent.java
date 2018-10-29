@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -29,6 +30,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 import fr.stl.mytimeline.mytimeline.R;
+import fr.stl.mytimeline.mytimeline.ScrollingActivity;
 import fr.stl.mytimeline.mytimeline.notification.NotificationReceiver;
 
 public class DialogEvent extends DialogFragment {
@@ -41,12 +43,12 @@ public class DialogEvent extends DialogFragment {
     private EventListHandler adapter;
     private ImageView imgv;
     private Uri imgvu = null;
+    private ScrollingActivity mainActivity;
 
 
-
-
-    public DialogEvent init(EventListHandler adapter){
+    public DialogEvent init(EventListHandler adapter, ScrollingActivity mainActivity){
         this.adapter = adapter;
+        this.mainActivity = mainActivity;
         return this;
     }
 
@@ -120,6 +122,17 @@ public class DialogEvent extends DialogFragment {
         desc = alert.findViewById(R.id.desc);
         place = alert.findViewById(R.id.place);
 
+        ImageView positionview = alert.findViewById(R.id.positionview);
+        positionview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Address address = mainActivity.getPosition();
+                if(address != null){
+                    place.setText(address.getAddressLine(0));
+                }
+
+            }
+        });
 
         tvdate.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+DateUtils.convertMonth(cal.get(Calendar.MONTH))+"/"+cal.get(Calendar.YEAR));
         tvdate.setOnClickListener(new View.OnClickListener() {
