@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="98" />
+                                                <entry key="scalingPercent" value="76" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,8 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/web_hi_res_512.png" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/mytimeline_text.png" />
+                                      <entry key="foregroundLayerName" value="mytimeline_text" />
                                       <entry key="outputName" value="ic_launcher_timeline" />
                                     </map>
                                   </option>
