@@ -5,6 +5,9 @@
         android:id="@+id/view_msg"
         android:title="View" />
     <item
+        android:id="@+id/share_msg"
+        android:title="Share"/>
+    <item
         android:id="@+id/edit_msg"
         android:title="Edit event"/>
     <item

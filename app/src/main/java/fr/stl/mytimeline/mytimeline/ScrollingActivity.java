@@ -5,6 +5,7 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -100,6 +101,23 @@ public class ScrollingActivity extends AppCompatActivity {
                             case R.id.view_msg:
                                 DialogEventView dev = new DialogEventView().init(adapter, position, ScrollingActivity.this);
                                 dev.show(ScrollingActivity.this.getSupportFragmentManager(), "Dialog_event_view");
+                                return true;
+                            case R.id.share_msg:
+                                Event e = adapter.getItem(position);
+                                Intent shareIntent = new Intent();
+                                shareIntent.setAction(Intent.ACTION_SEND);
+                                String text = "MyTimeline event !\n";
+                                text += "title: "+e.getName() +"\n";
+                                text += "place: "+e.getPlace() +"\n";
+                                text += "date: "+e.getDate() +"\n";
+                                text += "description: "+e.getText_content() +"\n";
+                                shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+                                if(e.getImg() != null){
+                                    shareIntent.putExtra(Intent.EXTRA_STREAM, e.getImg());
+                                }
+                                shareIntent.setType("image/jpeg");
+                                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                startActivity(Intent.createChooser(shareIntent, "share_event"));
                                 return true;
                             case R.id.edit_msg:
                                 DialogEventEdit de = new DialogEventEdit().init(adapter, position, ScrollingActivity.this);

@@ -51,7 +51,7 @@
         android:id="@+id/msg_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mardi 9 octobre 2018"
+        android:text="09/10/2018"
         app:layout_constraintLeft_toRightOf="@id/msg_smiley"
         app:layout_constraintBottom_toBottomOf="@id/msg_smiley"
         android:textSize="@dimen/date_size"
@@ -101,10 +101,10 @@
 
     <ImageView
         android:id="@+id/msg_img"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginTop="12dp"
         android:layout_marginRight="4dp"
+        app:layout_constraintLeft_toRightOf="@id/msg_title"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/msg_smiley"
         />
