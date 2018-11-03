@@ -106,14 +106,6 @@ public class EventListHandler extends ArrayAdapter<Event> {
             img.setImageDrawable(null);
         }
 
-        /*
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogEventEdit de = new DialogEventEdit().init(EventListHandler.this, pos);
-                de.show(activity.getSupportFragmentManager(), "Dialog_event_edit");
-            }
-        });*/
         return view;
     }
 

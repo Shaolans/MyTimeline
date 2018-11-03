@@ -4,6 +4,7 @@ import android.net.Uri;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Event implements Serializable {
@@ -14,6 +15,26 @@ public class Event implements Serializable {
     private Uri img;
     private String text_content;
     private String place;
+    private static int cpt = 0;
+
+    private Date generateRandomDate(){
+        long beginTime = Timestamp.valueOf("2016-01-01 00:00:00").getTime();
+        long endTime = Timestamp.valueOf("2018-01-01 00:00:00").getTime();
+        long diff = endTime - beginTime + 1;
+        Date random = new Date( beginTime + (long) (Math.random() * diff));
+        return random;
+    }
+
+    public Event(){
+        this.id = cpt;
+        this.name = "Event "+cpt;
+        this.date = generateRandomDate();
+        this.feel = Feeling.HAPPY;
+        this.img = null;
+        this.text_content = "Event content "+cpt;
+        this.place = "Event place "+cpt;
+        cpt++;
+    }
 
     public Event(int id, String name, Date date, Feeling feel, Uri img, String text_content, String place) {
         this.id = id;

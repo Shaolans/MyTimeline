@@ -2,6 +2,7 @@ package fr.stl.mytimeline.mytimeline;
 
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -22,13 +23,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -82,6 +89,48 @@ public class ScrollingActivity extends AppCompatActivity {
         final EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events, this);
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
+/*
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+        adapter.add(new Event());
+
+        adapter.sort(new Comparator<Event>() {
+            @Override
+            public int compare(Event o1, Event o2) {
+                if(o1.getDate().before(o2.getDate())) return -1;
+                if(o1.getDate().equals(o2.getDate())) return 0;
+                return 1;
+            }
+        });*/
+
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
@@ -137,15 +186,67 @@ public class ScrollingActivity extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fab = findViewById(R.id.fab_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogEvent de = new DialogEvent().init(adapter, ScrollingActivity.this);
-                FragmentManager fm = getSupportFragmentManager();
-                de.show(fm, "Dialog_event");
-                getPosition();
 
+        SpeedDialView speedDialView = findViewById(R.id.speedDial);
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.fab_btn_1, R.drawable.ic_event_black_24dp)
+                        .setLabel("Add event")
+                        .create()
+        );
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.fab_btn_2, R.drawable.ic_search_black_24dp)
+                        .setLabel("Scroll to date")
+                        .create()
+        );
+
+
+        speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
+            @Override
+            public boolean onActionSelected(SpeedDialActionItem actionItem) {
+                switch(actionItem.getId()){
+                    case R.id.fab_btn_1:
+                        DialogEvent de = new DialogEvent().init(adapter, ScrollingActivity.this);
+                        FragmentManager fm = getSupportFragmentManager();
+                        de.show(fm, "Dialog_event");
+                        getPosition();
+                        return true;
+                    case R.id.fab_btn_2:
+                        Calendar c =  Calendar.getInstance();
+                        DatePickerDialog datepick = new DatePickerDialog(ScrollingActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                int scrollposition = 0;
+                                boolean foundyear = false;
+                                boolean foundmonth = false;
+                                boolean foundday = false;
+                                for(int i = 0; i < adapter.getCount(); i++){
+                                    Event e = adapter.getItem(i);
+                                    Calendar cal = Calendar.getInstance();
+                                    cal.setTime(e.getDate());
+                                    if(!foundyear && cal.get(Calendar.YEAR) == year){
+                                        foundyear = true;
+                                        scrollposition = i;
+                                    }
+
+                                    if(!foundmonth && cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month){
+                                        foundmonth = true;
+                                        scrollposition = i;
+                                    }
+
+                                    if(!foundday && cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month && cal.get(Calendar.DAY_OF_MONTH) == dayOfMonth){
+                                        foundday = true;
+                                        scrollposition = i;
+                                    }
+
+                                    list.smoothScrollToPositionFromTop(scrollposition, 0);
+
+                                }
+                            }
+                        }, c.get(Calendar.YEAR),  c.get(Calendar.MONTH),  c.get(Calendar.DATE));
+                        datepick.show();
+
+                }
+                return false;
             }
         });
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fab_btn_1" type="id"/>
+    <item name="fab_btn_2" type="id"/>
+    <item name="fab_btn_3" type="id"/>
+</resources>
