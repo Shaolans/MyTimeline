@@ -117,6 +117,7 @@ public class DialogEventEdit extends DialogFragment {
                         return 0;
                     }
                 });
+                adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });
@@ -142,6 +143,7 @@ public class DialogEventEdit extends DialogFragment {
         });
 
 
+        cal.setTime(event.getDate());
         tvdate.setText(cal.get(Calendar.DATE)+"/"+DateUtils.convertMonth(cal.get(Calendar.MONTH))+"/"+cal.get(Calendar.YEAR));
         tvdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,10 +202,6 @@ public class DialogEventEdit extends DialogFragment {
 
         name.setText(event.getName());
         place.setText(event.getPlace());
-        Calendar c = Calendar.getInstance();
-        c.setTime(event.getDate());
-        tvdate.setText(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR));
-        time.setText(c.get(Calendar.HOUR)+":"+c.get(Calendar.MINUTE));
         if(event.getImg() != null) imgv.setImageURI(event.getImg());
         desc.setText(event.getText_content());
         Feeling f = event.getFeel();

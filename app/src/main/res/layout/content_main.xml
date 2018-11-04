@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:sdMainFabClosedSrc="@drawable/ic_add_white_24dp"
+        app:sdMainFabClosedSrc="@drawable/ic_add_black_24dp"
         app:sdMainFabClosedBackgroundColor="@color/colorPrimary"
         app:sdMainFabOpenedBackgroundColor="@color/colorPrimary"/>
 

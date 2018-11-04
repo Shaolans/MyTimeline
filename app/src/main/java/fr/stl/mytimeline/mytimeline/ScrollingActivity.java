@@ -48,6 +48,7 @@ import com.leinardi.android.speeddial.SpeedDialView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,34 +70,6 @@ public class ScrollingActivity extends AppCompatActivity {
     String current_timeline;
     DrawerLayout drawer;
 
-    public Address getPosition(){
-        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        boolean network_enabled = locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        Location location;
-
-        if(network_enabled){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            int res = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
-            if(res == PackageManager.PERMISSION_GRANTED){
-                location = locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if(location!=null){
-                    double longitude = location.getLongitude();
-                    double latitude = location.getLatitude();
-                    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                    try {
-                        return geocoder.getFromLocation(latitude, longitude, 1).get(0);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-        }
-        return null;
-
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -420,12 +393,17 @@ public class ScrollingActivity extends AppCompatActivity {
 
         SpeedDialView speedDialView = findViewById(R.id.speedDial);
         speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.fab_btn_1, R.drawable.ic_event_black_24dp)
+                new SpeedDialActionItem.Builder(R.id.fab_btn_1, R.drawable.ic_arrow_drop_down_black_24dp)
+                        .setLabel("Most recent events")
+                        .create()
+        );
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.fab_btn_2, R.drawable.ic_event_black_24dp)
                         .setLabel("Add event")
                         .create()
         );
         speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.fab_btn_2, R.drawable.ic_search_black_24dp)
+                new SpeedDialActionItem.Builder(R.id.fab_btn_3, R.drawable.ic_search_black_24dp)
                         .setLabel("Scroll to date")
                         .create()
         );
@@ -436,12 +414,15 @@ public class ScrollingActivity extends AppCompatActivity {
             public boolean onActionSelected(SpeedDialActionItem actionItem) {
                 switch(actionItem.getId()){
                     case R.id.fab_btn_1:
+                        list.smoothScrollToPosition(adapter.getCount());
+                        return true;
+                    case R.id.fab_btn_2:
                         DialogEvent de = new DialogEvent().init(adapter, ScrollingActivity.this);
                         FragmentManager fm = getSupportFragmentManager();
                         de.show(fm, "Dialog_event");
                         getPosition();
                         return true;
-                    case R.id.fab_btn_2:
+                    case R.id.fab_btn_3:
                         Calendar c =  Calendar.getInstance();
                         DatePickerDialog datepick = new DatePickerDialog(ScrollingActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -548,5 +529,34 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
         super.onDestroy();
+    }
+
+    public Address getPosition(){
+        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        boolean network_enabled = locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        Location location;
+
+        if(network_enabled){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            int res = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            if(res == PackageManager.PERMISSION_GRANTED){
+                location = locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if(location!=null){
+                    double longitude = location.getLongitude();
+                    double latitude = location.getLatitude();
+                    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                    try {
+                        return geocoder.getFromLocation(latitude, longitude, 1).get(0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+        }
+        return null;
+
+
     }
 }

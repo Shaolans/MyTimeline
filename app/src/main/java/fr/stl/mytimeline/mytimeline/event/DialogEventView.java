@@ -99,8 +99,9 @@ public class DialogEventView extends DialogFragment {
             }
         });
 
-        tvdate.setText(cal.get(Calendar.DATE)+"/"+DateUtils.convertMonth(cal.get(Calendar.MONTH))+"/"+cal.get(Calendar.YEAR));
+        cal.setTime(event.getDate());
 
+        tvdate.setText(cal.get(Calendar.DATE)+"/"+DateUtils.convertMonth(cal.get(Calendar.MONTH))+"/"+cal.get(Calendar.YEAR));
         time.setText(cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE));
 
         imgv = alert.findViewById(R.id.imgv);
@@ -118,10 +119,6 @@ public class DialogEventView extends DialogFragment {
 
         name.setText(event.getName());
         place.setText(event.getPlace());
-        Calendar c = Calendar.getInstance();
-        c.setTime(event.getDate());
-        tvdate.setText(c.get(Calendar.DATE)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR));
-        time.setText(c.get(Calendar.HOUR)+":"+c.get(Calendar.MINUTE));
         if(event.getImg() != null) imgv.setImageURI(event.getImg());
         desc.setText(event.getText_content());
         Feeling f = event.getFeel();

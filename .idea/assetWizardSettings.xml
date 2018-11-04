@@ -77,8 +77,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_add_white_24dp" />
+                            <entry key="outputName" value="ic_add_black_24dp" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\L-C\Desktop\Timeline-595b40b65ba036ed117d45fb.svg" />
                           </map>
