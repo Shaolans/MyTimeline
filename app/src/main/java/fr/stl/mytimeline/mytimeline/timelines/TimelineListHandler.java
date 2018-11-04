@@ -16,9 +16,9 @@ import java.util.List;
 
 import fr.stl.mytimeline.mytimeline.R;
 
-public class TimelineListHandler extends ArrayAdapter<String> {
+public class TimelineListHandler extends ArrayAdapter<Timeline> {
 
-    public TimelineListHandler(@NonNull Context context, int resource, @NonNull List<String> objects){
+    public TimelineListHandler(@NonNull Context context, int resource, @NonNull List<Timeline> objects){
         super(context, resource, objects);
     }
 
@@ -30,10 +30,9 @@ public class TimelineListHandler extends ArrayAdapter<String> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             view = inflater.inflate(R.layout.content_list_timelines, null);
         }
-        final String text = getItem(position);
+        final Timeline text = getItem(position);
         final TextView tv = view.findViewById(R.id.timeline_name);
-        tv.setText(text);
-
+        tv.setText(text.getName());
         return view;
     }
 }

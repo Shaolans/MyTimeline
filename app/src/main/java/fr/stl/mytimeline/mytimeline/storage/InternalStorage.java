@@ -16,6 +16,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.stl.mytimeline.mytimeline.timelines.Timeline;
+
 public class InternalStorage {
 
     public static void writeObject(Context context, String filename, Object object) throws IOException {
@@ -33,9 +35,15 @@ public class InternalStorage {
         return object;
     }
 
-    public static boolean removeObject(Context context, String filename) {
+    public static boolean removeFile(Context context, String filename) {
         File f = new File(context.getFilesDir(), filename);
         return f.delete();
+    }
+
+    public static boolean renameFile(Context context, String filename, String newFilename){
+        File old_f = new File(context.getFilesDir(), filename);
+        File new_f = new File(context.getFilesDir(), newFilename);
+        return old_f.renameTo(new_f);
     }
 
     public static void writeArrayInSharedPreferences(Context context, String key, List<String> timelines){
@@ -56,6 +64,32 @@ public class InternalStorage {
             JSONArray jsonArray = new JSONArray(prefs.getString(key,"[]"));
             for (int i =0; i<jsonArray.length(); i++){
                 res.add(jsonArray.get(i)+"");
+            }
+            return res;
+        } catch (JSONException jsone){
+            jsone.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void writeTimelinesArrayInSharedPreferences(Context context, String key, List<Timeline> timelines){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        JSONArray jsonArray = new JSONArray();
+        for(Timeline s : timelines){
+            jsonArray.put(s.getName());
+        }
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, jsonArray.toString());
+        editor.commit();
+    }
+
+    public static ArrayList<Timeline> readTimelinesArrayInSharedPreferences(Context context, String key){
+        try{
+            ArrayList<Timeline> res = new ArrayList<Timeline>();
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            JSONArray jsonArray = new JSONArray(prefs.getString(key,"[]"));
+            for (int i =0; i<jsonArray.length(); i++){
+                res.add(new Timeline(jsonArray.get(i)+""));
             }
             return res;
         } catch (JSONException jsone){

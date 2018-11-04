@@ -17,6 +17,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -56,13 +58,14 @@ import fr.stl.mytimeline.mytimeline.event.DialogEventView;
 import fr.stl.mytimeline.mytimeline.event.Event;
 import fr.stl.mytimeline.mytimeline.event.EventListHandler;
 import fr.stl.mytimeline.mytimeline.meteo.JSONWeatherTask;
+import fr.stl.mytimeline.mytimeline.timelines.Timeline;
 import fr.stl.mytimeline.mytimeline.timelines.TimelineListHandler;
 
 
 public class ScrollingActivity extends AppCompatActivity {
     private static int cpt = 0;
     List<Event> events;
-    List<String> timelines;
+    List<Timeline> timelines;
     String current_timeline;
     DrawerLayout drawer;
 
@@ -100,14 +103,17 @@ public class ScrollingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
         initChannels(this);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
+        final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
 
         try{
-            timelines = InternalStorage.readArrayInSharedPreferences(this,"timelines");
+            timelines = InternalStorage.readTimelinesArrayInSharedPreferences(this,"timelines");
             current_timeline = InternalStorage.readInSharedPreferences(this,"current_timeline");
             if(!current_timeline.equals("")){
                 events = (List<Event>) InternalStorage.readObject(this,current_timeline);
             }
+            collapsingToolbarLayout.setTitle(current_timeline);
+
         } catch (IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e){
@@ -119,7 +125,7 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
         if(timelines.isEmpty()){
-            timelines.add(current_timeline);
+            timelines.add(new Timeline(current_timeline));
         }
 
         if(events == null){
@@ -132,17 +138,15 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
         final TimelineListHandler tmAdapter = new TimelineListHandler(this,android.R.layout.simple_list_item_1, timelines);
-        ListView timeline_list = findViewById(R.id.timelines_list);
+        final ListView timeline_list = findViewById(R.id.timelines_list);
         timeline_list.setAdapter(tmAdapter);
-        Button button = (Button) findViewById(R.id.new_tm_button);
+        Button button = findViewById(R.id.new_tm_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ScrollingActivity.this);
-
+                builder.setTitle("Add new timeline");
                 final EditText input = new EditText(ScrollingActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-
                 builder.setView(input);
 
                 builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
@@ -156,7 +160,7 @@ public class ScrollingActivity extends AppCompatActivity {
                         else{
                             boolean exist = false;
                             for(int i=0; i<tmAdapter.getCount(); i++){
-                                if(enter.equals(tmAdapter.getItem(i))){
+                                if(enter.equals(tmAdapter.getItem(i).getName())){
                                     exist = true;
                                 }
                             }
@@ -165,7 +169,7 @@ public class ScrollingActivity extends AppCompatActivity {
                                 dialog.cancel();
                             }
                             else{
-                                tmAdapter.add(enter);
+                                tmAdapter.add(new Timeline(enter));
                                 try{
                                     InternalStorage.writeObject(ScrollingActivity.this, enter, new ArrayList<Event>());
                                 } catch (IOException e){
@@ -307,17 +311,18 @@ public class ScrollingActivity extends AppCompatActivity {
         timeline_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
                 try{
-                    if(!current_timeline.equals(tmAdapter.getItem(position))){
+                    if(!current_timeline.equals(tmAdapter.getItem(position).getName())){
                         List<Event> data_copy = new ArrayList<Event>();
                         for(int i=0; i<adapter.getCount(); i++){
                             data_copy.add(adapter.getItem(i));
                         }
                         InternalStorage.writeObject(ScrollingActivity.this, current_timeline, data_copy);
-                        current_timeline = tmAdapter.getItem(position);
+                        current_timeline = tmAdapter.getItem(position).getName();
                         events.clear();
                         events = (List<Event>) InternalStorage.readObject(ScrollingActivity.this,current_timeline);
                         adapter.clear();
                         adapter.addAll(events);
+                        collapsingToolbarLayout.setTitle(current_timeline);
                     }
                     drawer.closeDrawers();
                 } catch (IOException e){
@@ -333,6 +338,7 @@ public class ScrollingActivity extends AppCompatActivity {
         timeline_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
+                final String name = tmAdapter.getItem(position).getName();
                 PopupMenu popup = new PopupMenu(ScrollingActivity.this, v);
                 popup.getMenuInflater().inflate(R.menu.popup_menu_timelines, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -340,11 +346,65 @@ public class ScrollingActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.edit_timelines:
-                                // TODO : edit timeline name, collapse title, current_timelines, filename
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ScrollingActivity.this);
+                                builder.setTitle("Rename timeline");
+                                final EditText input = new EditText(ScrollingActivity.this);
+                                input.setText(name);
+                                builder.setView(input);
+
+                                builder.setPositiveButton("Rename", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String enter = input.getText().toString();
+                                        if(enter.equals("")){
+                                            Toast.makeText(ScrollingActivity.this,"Empty name is not accepted.", Toast.LENGTH_SHORT).show();
+                                            dialog.cancel();
+                                        }
+                                        else{
+                                            if(!enter.equals(name)) {
+                                                boolean exist = false;
+                                                for (int i = 0; i < tmAdapter.getCount(); i++) {
+                                                    if (enter.equals(tmAdapter.getItem(i).getName())) {
+                                                        exist = true;
+                                                    }
+                                                }
+                                                if (exist) {
+                                                    Toast.makeText(ScrollingActivity.this, "Name already exists.", Toast.LENGTH_SHORT).show();
+                                                    dialog.cancel();
+                                                } else {
+                                                    InternalStorage.renameFile(ScrollingActivity.this, name, enter);
+                                                    tmAdapter.getItem(position).setName(enter);
+                                                    if(current_timeline.equals(name)){
+                                                        collapsingToolbarLayout.setTitle(enter);
+                                                    }
+                                                    tmAdapter.notifyDataSetChanged();
+                                                }
+                                            }
+                                            else{
+                                                Toast.makeText(ScrollingActivity.this, "Nothing changed.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                });
+
+                                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                builder.show();
+
                                 return true;
                             case R.id.remove_timelines:
-                                // TODO: rename file, switch current event list to first taked? (or enable remove current timeline)
-                                tmAdapter.remove(tmAdapter.getItem(position));
+                                if(current_timeline.equals(tmAdapter.getItem(position).getName())){
+                                    Toast.makeText(ScrollingActivity.this,"You can't remove the current timeline.", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    InternalStorage.removeFile(ScrollingActivity.this, tmAdapter.getItem(position).getName());
+                                    tmAdapter.remove(tmAdapter.getItem(position));
+                                }
                                 return true;
                             default:
                                 return false;
@@ -480,7 +540,7 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         try{
-            InternalStorage.writeArrayInSharedPreferences(this,"timelines", timelines);
+            InternalStorage.writeTimelinesArrayInSharedPreferences(this,"timelines", timelines);
             InternalStorage.writeInSharedPreferences(this,"current_timeline", current_timeline);
             InternalStorage.writeObject(this, current_timeline, events);
         } catch (IOException e){
