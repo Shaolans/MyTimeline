@@ -41,7 +41,11 @@ public class Event implements Serializable {
         this.name = name;
         this.date = date;
         this.feel = feel;
-        this.img = img.toString();
+        if(img != null){
+            this.img = img.toString();
+        }else{
+            this.img = null;
+        }
         this.text_content = text_content;
         this.place = place;
     }
@@ -79,7 +83,7 @@ public class Event implements Serializable {
     }
 
     public Uri getImg() {
-        return Uri.parse(img);
+        return img==null?null:Uri.parse(img);
     }
 
     public void setImg(Uri img) {

@@ -103,7 +103,7 @@ public class EventListHandler extends ArrayAdapter<Event> {
         if(event.getImg() != null){
             img.setImageURI(event.getImg());
         }else{
-            img.setImageDrawable(null);
+            img.setImageResource(R.drawable.background_exemple);
         }
 
         return view;
