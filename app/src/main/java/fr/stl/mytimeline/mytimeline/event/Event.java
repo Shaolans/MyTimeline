@@ -12,7 +12,7 @@ public class Event implements Serializable {
     private String name;
     private Date date;
     private Feeling feel;
-    private Uri img;
+    private String img;
     private String text_content;
     private String place;
     private static int cpt = 0;
@@ -41,7 +41,7 @@ public class Event implements Serializable {
         this.name = name;
         this.date = date;
         this.feel = feel;
-        this.img = img;
+        this.img = img.toString();
         this.text_content = text_content;
         this.place = place;
     }
@@ -79,11 +79,11 @@ public class Event implements Serializable {
     }
 
     public Uri getImg() {
-        return img;
+        return Uri.parse(img);
     }
 
     public void setImg(Uri img) {
-        this.img = img;
+        this.img = img.toString();
     }
 
     public String getText_content() {

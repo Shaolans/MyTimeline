@@ -4,6 +4,7 @@ package fr.stl.mytimeline.mytimeline;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -34,6 +35,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -73,6 +75,8 @@ public class ScrollingActivity extends AppCompatActivity {
         final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
 
         try{
+            this.getReadMediaPermission();
+
             timelines = InternalStorage.readTimelinesArrayInSharedPreferences(this,"timelines");
             current_timeline = InternalStorage.readInSharedPreferences(this,"current_timeline");
             if(!current_timeline.equals("")){
@@ -524,6 +528,11 @@ public class ScrollingActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy(){
+        storeAll();
+        super.onDestroy();
+    }
+
+    public void storeAll(){
         try{
             InternalStorage.writeTimelinesArrayInSharedPreferences(this,"timelines", timelines);
             InternalStorage.writeInSharedPreferences(this,"current_timeline", current_timeline);
@@ -531,8 +540,6 @@ public class ScrollingActivity extends AppCompatActivity {
         } catch (IOException e){
             e.printStackTrace();
         }
-
-        super.onDestroy();
     }
 
     public Address getPosition(){
@@ -562,5 +569,16 @@ public class ScrollingActivity extends AppCompatActivity {
         return null;
 
 
+    }
+
+    public boolean getReadMediaPermission(){
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        int res = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(res == PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
