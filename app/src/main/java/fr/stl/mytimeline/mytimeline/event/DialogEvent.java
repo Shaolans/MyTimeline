@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 
 
 import fr.stl.mytimeline.mytimeline.R;
@@ -111,7 +112,7 @@ public class DialogEvent extends DialogFragment {
                         desc.getText().toString(),place.getText().toString());
                 adapter.add(e);
                 AppCompatCheckBox notify = alert.findViewById(R.id.notifycb);
-                if(notify.isChecked()){
+                if(notify.isChecked() && new Date().before(e.getDate())){
                     setNotification(e);
                 }
                 adapter.sort(new Comparator<Event>() {
