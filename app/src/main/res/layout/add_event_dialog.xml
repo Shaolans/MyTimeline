@@ -192,5 +192,20 @@
             android:scaleY="0.55" />
     </RadioGroup>
 
+    <ImageView
+        android:id="@+id/notifyimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_notifications_active_black_24dp"
+        app:layout_constraintTop_toTopOf="@id/notifycb"
+        app:layout_constraintBottom_toBottomOf="@id/notifycb"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/notifycb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        app:layout_constraintTop_toBottomOf="@id/radiogroup"
+        app:layout_constraintLeft_toRightOf="@id/notifyimg"/>
 </android.support.constraint.ConstraintLayout>

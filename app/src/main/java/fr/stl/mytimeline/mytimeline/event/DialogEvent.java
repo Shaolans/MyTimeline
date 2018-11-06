@@ -1,6 +1,5 @@
 package fr.stl.mytimeline.mytimeline.event;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -15,6 +14,7 @@ import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -24,10 +24,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.time.LocalDate;
+
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
+
 
 import fr.stl.mytimeline.mytimeline.R;
 import fr.stl.mytimeline.mytimeline.ScrollingActivity;
@@ -38,13 +38,12 @@ public class DialogEvent extends DialogFragment {
     private EditText name;
     private EditText place;
     private EditText desc;
-    private ImageView img;
     private RadioGroup rgfeel;
     private EventListHandler adapter;
     private ImageView imgv;
     private Uri imgvu = null;
     private ScrollingActivity mainActivity;
-
+    private String content = null;
 
     public DialogEvent init(EventListHandler adapter, ScrollingActivity mainActivity){
         this.adapter = adapter;
@@ -52,6 +51,16 @@ public class DialogEvent extends DialogFragment {
         return this;
     }
 
+    public DialogEvent init(EventListHandler adapter, ScrollingActivity mainActivity, String content){
+        this.content = content;
+        return init(adapter, mainActivity);
+    }
+
+
+    public DialogEvent init(EventListHandler adapter, ScrollingActivity mainActivity, Uri imgvu){
+        this.imgvu = imgvu;
+        return init(adapter, mainActivity);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle saveInstanceState){
@@ -72,7 +81,7 @@ public class DialogEvent extends DialogFragment {
 
 
 
-        android.support.v7.app.AlertDialog alert = alertDialogBuilder.create();
+        final android.support.v7.app.AlertDialog alert = alertDialogBuilder.create();
 
 
         alert.setButton(AlertDialog.BUTTON_POSITIVE, "Add", new DialogInterface.OnClickListener() {
@@ -101,7 +110,10 @@ public class DialogEvent extends DialogFragment {
                 Event e = new Event(0, name.getText().toString(), cal.getTime(), value, imgvu,
                         desc.getText().toString(),place.getText().toString());
                 adapter.add(e);
-                setNotification(e);
+                AppCompatCheckBox notify = alert.findViewById(R.id.notifycb);
+                if(notify.isChecked()){
+                    setNotification(e);
+                }
                 adapter.sort(new Comparator<Event>() {
                     @Override
                     public int compare(Event o1, Event o2) {
@@ -121,6 +133,8 @@ public class DialogEvent extends DialogFragment {
         name = alert.findViewById(R.id.event_name_edit);
         desc = alert.findViewById(R.id.desc);
         place = alert.findViewById(R.id.place);
+
+        if(content != null) desc.setText(content);
 
         ImageView positionview = alert.findViewById(R.id.positionview);
         positionview.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +182,11 @@ public class DialogEvent extends DialogFragment {
             }
         });
 
+
         imgv = alert.findViewById(R.id.imgv);
+        if(imgvu != null){
+            imgv.setImageURI(imgvu);
+        }
         imgv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,6 +223,8 @@ public class DialogEvent extends DialogFragment {
                 imgvu = data.getData();
                 Toast.makeText(getActivity(), data.getData().toString()+" added to event", Toast.LENGTH_LONG).show();
             }else{
+                imgv.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+                imgvu = null;
                 Toast.makeText(getActivity(), "No image selected", Toast.LENGTH_LONG).show();
             }
 

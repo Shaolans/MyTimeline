@@ -14,6 +14,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -469,6 +470,28 @@ public class ScrollingActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+
+
+
+
+
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if("text/plain".equals(type)){
+                DialogEvent de = new DialogEvent().init(adapter, ScrollingActivity.this, intent.getStringExtra(Intent.EXTRA_TEXT));
+                FragmentManager fm = getSupportFragmentManager();
+                de.show(fm, "Dialog_event");
+            } else if (type.startsWith("image/")) {
+                Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                DialogEvent de = new DialogEvent().init(adapter, ScrollingActivity.this, imageUri);
+                FragmentManager fm = getSupportFragmentManager();
+                de.show(fm, "Dialog_event");
+            }
+        }
 
     }
 
