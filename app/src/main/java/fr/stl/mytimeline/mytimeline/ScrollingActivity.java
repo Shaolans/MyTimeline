@@ -532,6 +532,18 @@ public class ScrollingActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+
+    @Override
+    protected void onPause(){
+        storeAll();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop(){
+        storeAll();
+        super.onStop();
+    }
     public void storeAll(){
         try{
             InternalStorage.writeTimelinesArrayInSharedPreferences(this,"timelines", timelines);
@@ -572,7 +584,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     public boolean getReadMediaPermission(){
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
         int res = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
         if(res == PackageManager.PERMISSION_GRANTED){
             return true;
