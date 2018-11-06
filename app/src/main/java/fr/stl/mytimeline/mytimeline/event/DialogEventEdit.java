@@ -112,8 +112,8 @@ public class DialogEventEdit extends DialogFragment {
                 adapter.sort(new Comparator<Event>() {
                     @Override
                     public int compare(Event o1, Event o2) {
-                        if(o1.getDate().before(o2.getDate())) return -1;
-                        if(o1.getDate().after(o2.getDate())) return 1;
+                        if(o1.getDate().before(o2.getDate())) return 1;
+                        if(o1.getDate().after(o2.getDate())) return -1;
                         return 0;
                     }
                 });

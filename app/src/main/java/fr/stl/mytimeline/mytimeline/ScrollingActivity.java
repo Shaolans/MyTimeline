@@ -184,7 +184,8 @@ public class ScrollingActivity extends AppCompatActivity {
         final EventListHandler adapter = new EventListHandler(this, android.R.layout.simple_list_item_1, events, this);
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
-/*
+
+        /*
         adapter.add(new Event());
         adapter.add(new Event());
         adapter.add(new Event());
@@ -220,9 +221,9 @@ public class ScrollingActivity extends AppCompatActivity {
         adapter.sort(new Comparator<Event>() {
             @Override
             public int compare(Event o1, Event o2) {
-                if(o1.getDate().before(o2.getDate())) return -1;
+                if(o1.getDate().before(o2.getDate())) return 1;
                 if(o1.getDate().equals(o2.getDate())) return 0;
-                return 1;
+                return -1;
             }
         });*/
 
@@ -394,7 +395,7 @@ public class ScrollingActivity extends AppCompatActivity {
         SpeedDialView speedDialView = findViewById(R.id.speedDial);
         speedDialView.addActionItem(
                 new SpeedDialActionItem.Builder(R.id.fab_btn_1, R.drawable.ic_arrow_drop_down_black_24dp)
-                        .setLabel("Most recent events")
+                        .setLabel("Most to bottom")
                         .create()
         );
         speedDialView.addActionItem(
