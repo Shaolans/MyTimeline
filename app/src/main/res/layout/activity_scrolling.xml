@@ -23,19 +23,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/nav_margin_size"
-                android:text="My timelines"
-                android:gravity="center"
-                android:layout_weight="0"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+            <include
+                layout="@layout/navig_view_header"
+                />
 
             <ListView
                 android:id="@+id/timelines_list"
+                android:padding="12dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
             <Button
@@ -46,7 +44,6 @@
                 android:background="@color/colorPrimaryDark"
                 android:text="add new timeline"/>
         </LinearLayout>
-
 
     </android.support.design.widget.NavigationView>
 
