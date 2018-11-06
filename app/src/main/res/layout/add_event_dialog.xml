@@ -123,6 +123,8 @@
         android:minLines="6"
         android:hint="Today is a great day !"
         app:layout_constraintTop_toBottomOf="@id/desctext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
     <TextView
