@@ -5,107 +5,91 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <ImageView
-        android:id="@+id/img_left"
-        android:layout_width="60dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/marker_inactive"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:layout_margin="16dp">
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:src="@drawable/marker"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/img_left"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/msg_img"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background_exemple"/>
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:src="@drawable/marker"
-        app:layout_constraintTop_toBottomOf="@id/img_left"
-        app:layout_constraintBottom_toTopOf="parent"
-        />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-    <TextView
-        android:id="@+id/padding_top"
-        android:layout_width="wrap_content"
-        android:layout_height="15dp"
-        app:layout_constraintLeft_toRightOf="@id/img_left"
-        />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/msg_title"
+                        android:layout_width="@dimen/descr_size"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
 
-    <ImageView
-        android:id="@+id/msg_smiley"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:padding="2dp"
-        android:src="@drawable/smiley_happy"
-        app:layout_constraintTop_toBottomOf="@id/padding_top"
-        app:layout_constraintLeft_toRightOf="@id/img_left"/>
+                        android:layout_marginBottom="4dp"
+                        android:text="Title of message"
+                        android:textSize="20dp"
+                        android:textColor="@android:color/black" />
+                    <TextView
+                        android:id="@+id/msg_descri"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Description"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+                </LinearLayout>
 
-    <TextView
-        android:id="@+id/msg_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="09/10/2018"
-        app:layout_constraintLeft_toRightOf="@id/msg_smiley"
-        app:layout_constraintBottom_toBottomOf="@id/msg_smiley"
-        android:textSize="@dimen/date_size"
-        android:paddingTop="10dp"/>
 
-    <TextView
-        android:id="@+id/msg_tiret"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/msg_date"
-        app:layout_constraintBottom_toBottomOf="@id/msg_date"
-        android:text=" - " />
 
-    <TextView
-        android:id="@+id/msg_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/msg_tiret"
-        app:layout_constraintBottom_toBottomOf="@id/msg_date"
-        android:text="00:00"
-        android:textSize="@dimen/date_size" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:id="@+id/msg_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="09/10/2018"
+                        android:textSize="@dimen/date_size"/>
 
-    <TextView
-        android:id="@+id/msg_title"
-        android:layout_width="@dimen/descr_size"
-        android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:text="Title of message"
-        android:textSize="20dp"
-        android:textColor="@android:color/black"
-        app:layout_constraintLeft_toRightOf="@id/img_left"
-        app:layout_constraintRight_toLeftOf="@id/msg_img"
-        app:layout_constraintTop_toBottomOf="@id/msg_smiley"
-        />
+                    <TextView
+                        android:id="@+id/msg_tiret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" - "
+                        android:textSize="@dimen/date_size"/>
 
-    <TextView
-        android:id="@+id/msg_descri"
-        android:layout_width="@dimen/descr_size"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:text="Description "
-        android:textColor="@android:color/black"
-        android:textSize="14dp"
-        app:layout_constraintLeft_toRightOf="@id/img_left"
-        app:layout_constraintRight_toLeftOf="@id/msg_img"
-        app:layout_constraintTop_toBottomOf="@id/msg_title" />
+                    <TextView
+                        android:id="@+id/msg_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:00"
+                        android:textSize="@dimen/date_size" />
+                    <ImageView
+                        android:id="@+id/msg_smiley"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/smiley_happy"/>
+                </LinearLayout>
 
-    <ImageView
-        android:id="@+id/msg_img"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginRight="4dp"
-        app:layout_constraintLeft_toRightOf="@id/msg_title"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/msg_smiley"
-        />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 </android.support.constraint.ConstraintLayout>
