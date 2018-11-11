@@ -1,10 +1,9 @@
 package fr.stl.mytimeline.mytimeline.event;
 
-import android.app.AlarmManager;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
@@ -28,12 +26,12 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
 
 
 import fr.stl.mytimeline.mytimeline.R;
 import fr.stl.mytimeline.mytimeline.ScrollingActivity;
 import fr.stl.mytimeline.mytimeline.notification.NotificationReceiver;
+import fr.stl.mytimeline.mytimeline.notification.NotificationUtil;
 
 public class DialogEvent extends DialogFragment {
 
@@ -109,12 +107,14 @@ public class DialogEvent extends DialogFragment {
                         break;
                 }
 
-                Event e = new Event(0, name.getText().toString(), cal.getTime(), value, imgvu,
-                        desc.getText().toString(),place.getText().toString());
-                adapter.add(e);
                 AppCompatCheckBox notify = alert.findViewById(R.id.notifycb);
-                if(notify.isChecked() && new Date().before(e.getDate())){
-                    setNotification(e);
+                Event e = new Event(Event.cpt++, name.getText().toString(), cal.getTime(), value, imgvu,
+                        desc.getText().toString(),place.getText().toString(), notify.isChecked());
+                adapter.add(e);
+
+
+                if(notify.isChecked()){
+                    NotificationUtil.setNotification(e, getActivity());
                 }
                 adapter.sort(new Comparator<Event>() {
                     @Override
@@ -233,20 +233,6 @@ public class DialogEvent extends DialogFragment {
         }
     }
 
-    public AlarmManager setNotification(Event e){
-        Intent alertIntent = new Intent(getActivity(), NotificationReceiver.class);
 
-        alertIntent
-                .putExtra("name", e.getName())
-                .putExtra("text_content", e.getText_content())
-                .putExtra("place", e.getPlace());
 
-        AlarmManager alarmManager = (AlarmManager)
-                getActivity().getSystemService(getActivity().ALARM_SERVICE);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, e.getDate().getTime(),
-                PendingIntent.getBroadcast(getActivity(), 1, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-
-        return alarmManager;
-    }
 }

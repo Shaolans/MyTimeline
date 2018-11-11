@@ -15,7 +15,9 @@ public class Event implements Serializable {
     private String img;
     private String text_content;
     private String place;
-    private static int cpt = 0;
+    public static int cpt = 0;
+    private boolean notify;
+
 
     private Date generateRandomDate(){
         long beginTime = Timestamp.valueOf("2016-01-01 00:00:00").getTime();
@@ -36,7 +38,16 @@ public class Event implements Serializable {
         cpt++;
     }
 
-    public Event(int id, String name, Date date, Feeling feel, Uri img, String text_content, String place) {
+    public void setNotify(boolean notify) {
+        this.notify = notify;
+    }
+
+    public boolean isNotify() {
+
+        return notify;
+    }
+
+    public Event(int id, String name, Date date, Feeling feel, Uri img, String text_content, String place, boolean notify) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -48,6 +59,9 @@ public class Event implements Serializable {
         }
         this.text_content = text_content;
         this.place = place;
+        this.notify = notify;
+
+
     }
 
     public int getId() {
@@ -105,6 +119,8 @@ public class Event implements Serializable {
     public void setPlace(String place) {
         this.place = place;
     }
+
+
 
 
 }

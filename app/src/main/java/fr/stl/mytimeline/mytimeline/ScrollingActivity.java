@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -71,6 +72,12 @@ public class ScrollingActivity extends AppCompatActivity {
         initChannels(this);
         drawer = findViewById(R.id.drawer_layout);
         final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
+
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        Event.cpt = sharedPref.getInt("id_event", 0);
+
+
 
         try{
             this.getReadMediaPermission();
@@ -547,6 +554,10 @@ public class ScrollingActivity extends AppCompatActivity {
             InternalStorage.writeTimelinesArrayInSharedPreferences(this,"timelines", timelines);
             InternalStorage.writeInSharedPreferences(this,"current_timeline", current_timeline);
             InternalStorage.writeObject(this, current_timeline, events);
+            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("id_event", Event.cpt);
+            editor.commit();
         } catch (IOException e){
             e.printStackTrace();
         }

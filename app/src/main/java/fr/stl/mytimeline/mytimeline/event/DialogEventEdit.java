@@ -12,6 +12,7 @@ import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,9 +26,11 @@ import android.widget.Toast;
 import java.net.URI;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 
 import fr.stl.mytimeline.mytimeline.R;
 import fr.stl.mytimeline.mytimeline.ScrollingActivity;
+import fr.stl.mytimeline.mytimeline.notification.NotificationUtil;
 
 public class DialogEventEdit extends DialogFragment {
     private EditText name;
@@ -43,7 +46,7 @@ public class DialogEventEdit extends DialogFragment {
     private TextView time;
     private Uri imgvu;
     private ScrollingActivity mainActivity;
-
+    private AppCompatCheckBox notify;
 
 
 
@@ -74,7 +77,8 @@ public class DialogEventEdit extends DialogFragment {
 
 
 
-        android.support.v7.app.AlertDialog alert = alertDialogBuilder.create();
+        final android.support.v7.app.AlertDialog alert = alertDialogBuilder.create();
+
 
 
         alert.setButton(AlertDialog.BUTTON_POSITIVE, "Edit", new DialogInterface.OnClickListener() {
@@ -106,8 +110,15 @@ public class DialogEventEdit extends DialogFragment {
                 event.setName(name.getText().toString());
                 event.setDate(cal.getTime());
                 event.setFeel(value);
+                event.setNotify(notify.isChecked());
                 if(imgvu != null) event.setImg(imgvu);
                 event.setPlace(place.getText().toString());
+
+
+                NotificationUtil.cancelNotification(event, mainActivity);
+                if(notify.isChecked() && new Date().before(event.getDate())){
+                    NotificationUtil.setNotification(event, mainActivity);
+                }
 
                 adapter.sort(new Comparator<Event>() {
                     @Override
@@ -129,7 +140,8 @@ public class DialogEventEdit extends DialogFragment {
         name = alert.findViewById(R.id.event_name_edit);
         desc = alert.findViewById(R.id.desc);
         place = alert.findViewById(R.id.place);
-
+        notify = alert.findViewById(R.id.notifycb);
+        notify.setChecked(event.isNotify());
         ImageView positionview = alert.findViewById(R.id.positionview);
         positionview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,16 +196,10 @@ public class DialogEventEdit extends DialogFragment {
             public void onClick(View v) {
                 Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 getIntent.setType("image/*");
-
                 Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 pickIntent.setType("image/*");
-
                 Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-
-                //setTargetFragment(DialogEvent.this, PICK_IMAGE);
-                //getTargetFragment().onActivityResult(getTargetRequestCode(), 0, chooserIntent);
-                //getTargetFragment().startActivityForResult(chooserIntent, PICK_IMAGE);
                 startActivityForResult(chooserIntent, PICK_IMAGE);
 
             }
