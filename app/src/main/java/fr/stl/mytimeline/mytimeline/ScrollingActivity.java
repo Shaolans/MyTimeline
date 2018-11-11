@@ -187,48 +187,6 @@ public class ScrollingActivity extends AppCompatActivity {
         final ListView list = findViewById(R.id.listevents);
         list.setAdapter(adapter);
 
-        /*
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-        adapter.add(new Event());
-
-        adapter.sort(new Comparator<Event>() {
-            @Override
-            public int compare(Event o1, Event o2) {
-                if(o1.getDate().before(o2.getDate())) return 1;
-                if(o1.getDate().equals(o2.getDate())) return 0;
-                return -1;
-            }
-        });*/
-
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {

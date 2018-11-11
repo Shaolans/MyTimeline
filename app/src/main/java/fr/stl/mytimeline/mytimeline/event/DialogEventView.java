@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -19,6 +21,7 @@ import java.util.Locale;
 
 import fr.stl.mytimeline.mytimeline.R;
 import fr.stl.mytimeline.mytimeline.ScrollingActivity;
+import fr.stl.mytimeline.mytimeline.notification.NotificationUtil;
 
 public class DialogEventView extends DialogFragment {
     private EditText name;
@@ -34,6 +37,7 @@ public class DialogEventView extends DialogFragment {
     private TextView time;
     private Uri imgvu;
     private ScrollingActivity mainActivity;
+    private AppCompatCheckBox notify;
 
 
 
@@ -72,10 +76,24 @@ public class DialogEventView extends DialogFragment {
         name = alert.findViewById(R.id.event_name_edit);
         desc = alert.findViewById(R.id.desc);
         place = alert.findViewById(R.id.place);
+        notify = alert.findViewById(R.id.notifycb);
 
         name.setEnabled(false);
         desc.setEnabled(false);
         place.setEnabled(false);
+
+        notify.setChecked(event.isNotify());
+        notify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                event.setNotify(isChecked);
+                NotificationUtil.cancelNotification(event, getActivity());
+                if(isChecked){
+                    NotificationUtil.setNotification(event, getActivity());
+                }
+
+            }
+        });
 
         ImageView positionview = alert.findViewById(R.id.positionview);
         positionview.setOnClickListener(new View.OnClickListener() {
