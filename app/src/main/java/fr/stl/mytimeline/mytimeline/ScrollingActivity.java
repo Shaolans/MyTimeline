@@ -355,7 +355,7 @@ public class ScrollingActivity extends AppCompatActivity {
         SpeedDialView speedDialView = findViewById(R.id.speedDial);
         speedDialView.addActionItem(
                 new SpeedDialActionItem.Builder(R.id.fab_btn_1, R.drawable.ic_arrow_drop_down_black_24dp)
-                        .setLabel("Most to bottom")
+                        .setLabel("Scroll to oldests events")
                         .create()
         );
         speedDialView.addActionItem(
