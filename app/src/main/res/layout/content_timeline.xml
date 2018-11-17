@@ -28,13 +28,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="16dp">
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
                     <TextView
                         android:id="@+id/msg_title"
                         android:layout_width="@dimen/descr_size"
@@ -45,52 +44,51 @@
                         android:text="Title of message"
                         android:textSize="20dp"
                         android:textColor="@android:color/black" />
-                    <TextView
-                        android:id="@+id/msg_descri"
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginBottom="4dp"
-                        android:text="Description"
-                        android:textColor="@android:color/black"
-                        android:textSize="14dp" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:id="@+id/msg_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="09/10/2018"
+                            android:textSize="@dimen/date_size"/>
+
+                        <TextView
+                            android:id="@+id/msg_tiret"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - "
+                            android:textSize="@dimen/date_size"/>
+
+                        <TextView
+                            android:id="@+id/msg_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00:00"
+                            android:textSize="@dimen/date_size" />
+                        <ImageView
+                            android:id="@+id/msg_smiley"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/smiley_happy"/>
+                    </LinearLayout>
                 </LinearLayout>
 
 
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <TextView
-                        android:id="@+id/msg_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="09/10/2018"
-                        android:textSize="@dimen/date_size"/>
-
-                    <TextView
-                        android:id="@+id/msg_tiret"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" - "
-                        android:textSize="@dimen/date_size"/>
-
-                    <TextView
-                        android:id="@+id/msg_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="00:00"
-                        android:textSize="@dimen/date_size" />
-                    <ImageView
-                        android:id="@+id/msg_smiley"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/smiley_happy"/>
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/msg_descri"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Description"
+                    android:textColor="@android:color/black"
+                    android:textSize="14dp" />
             </LinearLayout>
         </LinearLayout>
 

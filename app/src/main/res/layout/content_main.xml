@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.AppCompat.Body1"
-                        android:text="City,"
+
                         android:layout_gravity="right"
                         />
                     <TextView
@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.AppCompat.Body1"
-                        android:text="Country"
+
                         android:layout_gravity="right"/>
                     <TextView
                         android:id="@+id/temp"
@@ -66,14 +66,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="Temperature" />
+                         />
                     <TextView
                         android:id="@+id/descr"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="Description"
+
                         />
                     <ImageView
                         android:id="@+id/weather_icon"

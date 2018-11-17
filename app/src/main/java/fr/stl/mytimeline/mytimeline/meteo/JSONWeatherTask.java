@@ -37,17 +37,17 @@ public class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
 
     @Override
     protected void onPostExecute(Weather weather){
-
-        TextView city = (TextView) activity.findViewById(R.id.city);
-        city.setText(weather.getCity());
-        TextView country = (TextView) activity.findViewById(R.id.country);
-        country.setText(weather.getCountry());
-        TextView temp = (TextView) activity.findViewById(R.id.temp);
-        temp.setText((int)(weather.getTemp()-275.15)+"°C");
-        TextView descr = (TextView) activity.findViewById(R.id.descr);
-        descr.setText(weather.getDescription().toUpperCase(Locale.FRANCE));
-        ImageView weather_img = (ImageView) activity.findViewById(R.id.weather_icon);
-        weather_img.setImageBitmap(weather.getImg_bitmap());
-
+        if(weather != null){
+            TextView city = (TextView) activity.findViewById(R.id.city);
+            city.setText(weather.getCity());
+            TextView country = (TextView) activity.findViewById(R.id.country);
+            country.setText(weather.getCountry());
+            TextView temp = (TextView) activity.findViewById(R.id.temp);
+            temp.setText((int)(weather.getTemp()-275.15)+"°C");
+            TextView descr = (TextView) activity.findViewById(R.id.descr);
+            descr.setText(weather.getDescription().toUpperCase(Locale.FRANCE));
+            ImageView weather_img = (ImageView) activity.findViewById(R.id.weather_icon);
+            weather_img.setImageBitmap(weather.getImg_bitmap());
+        }
     }
 }
